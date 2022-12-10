@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+  
+  <title>MPLS VPN(single) | 晓玲空间</title>
+
+  <link rel="shortcut icon" href="/images/favicon.png">
+  <link rel="alternate" href="/atom.xml" title="晓玲空间" type="application/atom+xml">
+  <meta name="description" content="简介：使用MPLS网络实现单个VPN内站点之间的通信。 一、网络拓扑图：在GNS3中添加路由器，搭建如下拓扑。    二、Ip地址配置：1. IP地址配置规则：（1）链路地址：班级号.学号.两端路由器号.路由器号&#x2F;24，如R1的F0&#x2F;0端口地址为：1.99.12.1&#x2F;24，R2的F1&#x2F;0端口IP地址为：1.99.12.2&#x2F;24。 （2）Loopback地址：路由器号.路由器号.路由器号.路由器号，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MPLS VPN(single)">
+<meta property="og:url" content="http://example.com/2022/12/10/MPLS-VPN-single/index.html">
+<meta property="og:site_name" content="晓玲空间">
+<meta property="og:description" content="简介：使用MPLS网络实现单个VPN内站点之间的通信。 一、网络拓扑图：在GNS3中添加路由器，搭建如下拓扑。    二、Ip地址配置：1. IP地址配置规则：（1）链路地址：班级号.学号.两端路由器号.路由器号&#x2F;24，如R1的F0&#x2F;0端口地址为：1.99.12.1&#x2F;24，R2的F1&#x2F;0端口IP地址为：1.99.12.2&#x2F;24。 （2）Loopback地址：路由器号.路由器号.路由器号.路由器号，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps1.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps2.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps3.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps4.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps5.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps6.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps7.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps8.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps9.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps10.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps11.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps12.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps13.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps14.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps15.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps16.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps17.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps22.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps23.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps24.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps25.png">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps26.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps27.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps28.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps29.png">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps30.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps31.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps32.png">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps33.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps35.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps38.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps40.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps43.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps44.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps45.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps48.png">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps49.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps50.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps51.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps52.png">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps54.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps57.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps59.jpg">
+<meta property="og:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps61.jpg">
+<meta property="article:published_time" content="2022-12-10T23:20:24.000Z">
+<meta property="article:modified_time" content="2022-12-10T15:30:02.098Z">
+<meta property="article:author" content="sunxling">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/12/10/MPLS-VPN-single/wps1.jpg">
+
+  <meta name="keywords" content="">
+  <meta name="format-detection" content="telephone=no,email=no">
+  <meta name="theme-color" content="#9C27B0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="晓玲空间">
+  <meta name="msapplication-starturl" content="http://example.com/2022/12/10/MPLS-VPN-single/">
+  <meta name="msapplication-navbutton-color" content="#9C27B0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="晓玲空间">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="/images/favicon.png">
+
+  
+    <link rel="canonical" href="http://example.com/2022/12/10/MPLS-VPN-single/">
+  
+
+  
+  
+
+  
+  
+  
+
+  
+<link rel="stylesheet" href="/css/mdui.css">
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/custom.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
+  <script>var a=localStorage.getItem("mdui-theme-layout-dark");if(a){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(!a){document.getElementsByTagName("body")[0].className+=" mdui-drawer-body-left"};</script>
+  <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
+  <div class="mdui-toolbar mdui-color-theme">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+    <a href="/" class="mdui-typo-headline">晓玲空间</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: 'Search'}"><i class="mdui-icon material-icons">search</i></a>
+    <a href="/atom.xml" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'RSS'}"><i class="mdui-icon material-icons">rss_feed</i></a>
+  </div>
+</header>
+<div class="mdui-dialog" id="search">
+  
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="请输入关键字"><input type="hidden" name="sitesearch" value="http://example.com"></form>
+    <div class="search-result"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer mdui-drawer-full-height">
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(a){document.getElementById("sidebar").className+=" mdui-drawer-close"};</script>
+  <div class="mdui-grid-tile">
+    <img src="/images/banner.png" style="height: 160px;">
+    <img src="/images/avatar.png" class="avatar-animation" style="position: absolute; top: 10%; left: 24px; width: 64px; height: 64px; border: 2px solid #fff; border-radius: 50%;">
+    <div class="mdui-grid-tile-actions">
+      <div class="mdui-grid-tile-text">
+        <div class="mdui-grid-tile-title">sunxling</div>
+        <div class="mdui-grid-tile-subtitle"><i class="mdui-icon material-icons">art_track</i></div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    <a href="/" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">home</i>
+      <div class="mdui-list-item-content">Home</div>
+    </a>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-0");if(a){document.getElementsByClassName("mdui-collapse-item")[0].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">archive</i>
+        <div class="mdui-list-item-content">Archive</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2022/12/">December 2022<span class="mdui-ripple sidebar_archives-count">2</span></a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-1");if(a){document.getElementsByClassName("mdui-collapse-item")[1].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">class</i>
+        <div class="mdui-list-item-content">Category</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Categories</a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-2");if(a){document.getElementsByClassName("mdui-collapse-item")[2].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-brown">bookmark</i>
+        <div class="mdui-list-item-content">Tag</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Tags</a>
+        
+      </div>
+    </div>
+    <a href="/about" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-purple">person</i>
+      <div class="mdui-list-item-content">About</div>
+    </a>
+  </div>
+
+  <div class="mdui-divider"></div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    
+      <a href="/timeline" class="mdui-list-item mdui-ripple">时间轴</a>
+    
+      <a href="/tagcloud" class="mdui-list-item mdui-ripple">标签云</a>
+    
+      <a href="/gallery" class="mdui-list-item mdui-ripple">相册</a>
+    
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-3");if(a){document.getElementsByClassName("mdui-collapse-item")[3].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <div class="mdui-list-item-content">Links</div>
+        <i class="mdui-list-item-icon mdui-icon material-icons">link</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Links</a>
+        
+      </div>
+    </div>
+  </div>
+</aside>
+
+  <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-2.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">MPLS VPN(single)</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-12-10 / <i class="iconfont">&#xe601;</i> sunxling</div>
+        </div>
+      </div>
+      <div class="mdui-card-menu">
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">发送到手机</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="//chart.googleapis.com/chart?cht=qr&chs=246x246&chl=http://example.com/2022/12/10/MPLS-VPN-single/&chld=M|2">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=MPLS VPN(single)&url=http://example.com/2022/12/10/MPLS-VPN-single/&pic=http://example.com/images/favicon.png&searchPic=false&style=simple" target="_blank" class="mdui-ripple">Share to Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=MPLS VPN(single)&url=http://example.com/2022/12/10/MPLS-VPN-single/&via=sunxling" target="_blank" class="mdui-ripple">Share to Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/12/10/MPLS-VPN-single/" target="_blank" class="mdui-ripple">Share to Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=http://example.com/2022/12/10/MPLS-VPN-single/" target="_blank" class="mdui-ripple">Share to Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://example.com/2022/12/10/MPLS-VPN-single/&title=MPLS VPN(single)" target="_blank" class="mdui-ripple">Share to LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=晓玲空间&title=MPLS VPN(single)&pics=http://example.com/images/favicon.png&url=http://example.com/2022/12/10/MPLS-VPN-single/" target="_blank" class="mdui-ripple">Share to QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=http://example.com/2022/12/10/MPLS-VPN-single/&text=MPLS VPN(single)" target="_blank" class="mdui-ripple">Share to Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
+    <div class="mdui-card-content mdui-typo">
+      <p>简介：使用MPLS网络实现单个VPN内站点之间的通信。</p>
+<h2 id="一、网络拓扑图："><a href="#一、网络拓扑图：" class="headerlink" title="一、网络拓扑图："></a>一、网络拓扑图：</h2><p>在GNS3中添加路由器，搭建如下拓扑。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps1.jpg" class="" title="img"> 
+
+<h2 id="二、Ip地址配置："><a href="#二、Ip地址配置：" class="headerlink" title="二、Ip地址配置："></a>二、Ip地址配置：</h2><h3 id="1-IP地址配置规则："><a href="#1-IP地址配置规则：" class="headerlink" title="1. IP地址配置规则："></a>1. IP地址配置规则：</h3><p>（1）链路地址：班级号.学号.两端路由器号.路由器号/24，如R1的F0/0端口地址为：1.99.12.1/24，R2的F1/0端口IP地址为：1.99.12.2/24。</p>
+<p>（2）Loopback地址：路由器号.路由器号.路由器号.路由器号，如R1的Loopback地址为：1.1.1.1/32。</p>
+<p>（3）范例配置：1班99号的IP地址</p>
+<p>表1 IP地址分配</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>f0/0接口</th>
+<th>f1/0接口</th>
+<th>Loopback</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R1</td>
+<td>1.99.12.1/24</td>
+<td></td>
+<td>1.1.1.1/32</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>1.99.12.2/24</td>
+<td>1.99.23.2/24</td>
+<td>2.2.2.2/32</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>1.99.23.3/24</td>
+<td>1.99.34.3/24</td>
+<td>3.3.3.3/32</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>1.99.34.4/24</td>
+<td>1.99.45.4/24</td>
+<td>4.4.4.4/32</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>1.99.45.5/24</td>
+<td>1.99.56.5/24</td>
+<td>5.5.5.5/32</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>1.99.56.6/24</td>
+<td></td>
+<td>6.6.6.6/32</td>
+</tr>
+</tbody></table>
+<p>（4）配置完后，网络中的IP地址如下图所示</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps2.jpg" class="" title="img"> 
+
+<h3 id="2-配置命令："><a href="#2-配置命令：" class="headerlink" title="2. 配置命令："></a>2. 配置命令：</h3><table>
+<thead>
+<tr>
+<th>R1(CE1)</th>
+<th>R2(PE1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int f0/0ip address 1.99.12.1 255.255.255.0no shutdownint lo0ip address 1.1.1.1 255.255.255.255</td>
+<td>int f0/0ip address 1.99.12.2 255.255.255.0no shutdownint f1/0ip address 1.99.23.2 255.255.255.0no shutdownint lo0ip address 2.2.2.2 255.255.255.255</td>
+</tr>
+<tr>
+<td>R3(P1)</td>
+<td>R4(P2)</td>
+</tr>
+<tr>
+<td>int f0/0ip address 1.99.23.3 255.255.255.0no shutdownint f1/0ip address 1.99.34.3 255.255.255.0no shutdownint lo0ip address 3.3.3.3 255.255.255.255</td>
+<td>int f0/0ip address 1.99.34.4 255.255.255.0no shutdownint f1/0ip address 1.99.45.4 255.255.255.0no shutdownint lo0ip address 4.4.4.4 255.255.255.255</td>
+</tr>
+<tr>
+<td>R5(PE2)</td>
+<td>R6(CE2)</td>
+</tr>
+<tr>
+<td>int f0/0ip address 1.99.45.5 255.255.255.0no shutdownint f1/0ip address 1.99.56.5 255.255.255.0no shutdownint lo0ip address 5.5.5.5 255.255.255.255</td>
+<td>int f0/0ip address 1.99.56.6 255.255.255.0no shutdownint lo0ip address 6.6.6.6 255.255.255.255</td>
+</tr>
+</tbody></table>
+<h3 id="3-查看配置是否正确："><a href="#3-查看配置是否正确：" class="headerlink" title="3. 查看配置是否正确："></a>3. 查看配置是否正确：</h3><p>（1）查看端口状态：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps3.jpg" class="" title="img"> 
+
+<p>此时查看路由，可以发现各路由器只有本地直连路由及本地loopback路由。</p>
+<p>也可以在配置模式下使用do show ip int b命令跨模式查看。</p>
+<p>（2）查看相邻链路可达性</p>
+<p>在R2和R3之间的链路上使用Wireshark软件抓包。</p>
+<p>可以首先使用show arp命令查看一下地址解析表</p>
+<p>在R2上执行ping 1.99.23.3命令。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps4.jpg" class="" title="img"> 
+
+<p>！表示数据发送成功，可以看到第一个是”.”，则表示数据发送失败，这是因为，第一个包在发送时，R1中并没有1.99.12.2的MAC地址，于是就去发送ARP请求来获得其MAC地址，但是当获得MAC地址之后，第一个包已经超时了（等待MAC地址超时），并没有发送出去。</p>
+<p>（3）分析ARP过程</p>
+<p>在WireShark中查看ARP包，分析ARP请求报文：</p>
+<p>① 第二层地址：</p>
+<p>l 源MAC：本地MAC地址</p>
+<p>l 目的MAC：全F，广播地址</p>
+<p>注意：查看这个ARP请求包的数据链路层的目的MAC地址：全F，是一个广播地址，这也就意味着，发送一个ARP请求包，以太网中的所有主机都能够收到该ARP请求包，但是并不是所有的主机都会回复这个ARP请求包。</p>
+<p>② ARP请求报文：</p>
+<p>l 发送端IP地址：1.99.23.2</p>
+<p>l 目的Ip地址：1.99.23.3</p>
+<p>l 发送方MAC地址：本机MAC地址</p>
+<p>l 目的MAC地址：全0</p>
+<p>分析：在ARP请求包中，会把目的以太网地址字段的值置为全0，因为此时并不知道目的以太网地址是什么。</p>
+<p>以太网中只有当接收者的IP地址与ARP请求包中的Target IP address中标识的目的IP地址一致时才会进行回复。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps5.jpg" class="" title="img"> 
+
+<p>分析该ARP响应报文：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps6.jpg" class="" title="img"> 
+
+<p>① 第二层地址：</p>
+<p>l 源MAC：本地MAC地址</p>
+<p>l 目的MAC：R2的MAC地址</p>
+<p>此响应报文发送的时单播包。</p>
+<p>② ARP响应报文：</p>
+<p>l 发送端IP地址：1.99.23.3</p>
+<p>l 目的Ip地址：1.99.23.2</p>
+<p>l 发送方MAC地址：本机MAC地址</p>
+<p>l 目的MAC地址：R2的MAC地址</p>
+<p>此时也可以查看ping发出的ICMP包，只有4对ICMP包，因为第一个包已经超时了。 </p>
+<p>此处注意：不能再所有配置都完成后再查看ARP报文，当arp映射表已经形成后，链路上不会再发arp报文</p>
+<h2 id="三、域内路由协议配置"><a href="#三、域内路由协议配置" class="headerlink" title="三、域内路由协议配置"></a>三、域内路由协议配置</h2><ol>
+<li>配置命令</li>
+</ol>
+<p>首先配置R2和R3路由器，配置命令如下：</p>
+<table>
+<thead>
+<tr>
+<th>R2(PE1)</th>
+<th>R3(P1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>router ospf 50router-id 2.2.2.2net 1.99.23.2 0.0.0.0 area 0net 2.2.2.2 0.0.0.0 area 0</td>
+<td>router ospf 50router-id 3.3.3.3net 1.99.23.3 0.0.0.0 area 0net 1.99.34.3 0.0.0.0 area 0net 3.3.3.3 0.0.0.0 area 0</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li>分析OSPF邻居建立过程</li>
+</ol>
+<p>在R2和R3之间的链路上抓包，查看并分析OSPF邻居建立过程</p>
+<p>配置完R2后，在Wireshark上查看，发现R2一直在广播Hello报文</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps7.jpg" class="" title="img"> 
+
+<p>配置完R3后，在Wireshark上查看链路上的OSPF报文</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps8.jpg" class="" title="img"> 
+
+<p>分析该邻居建立及OSPF数据库同步过程</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps9.jpg" class="" title="img"> 
+
+
+
+<img src="/2022/12/10/MPLS-VPN-single/wps10.jpg" class="" title="img"> 
+
+
+
+<p>同样配置R4和R5路由器</p>
+<table>
+<thead>
+<tr>
+<th>R4(P2)</th>
+<th>R5(PE2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>router ospf 50router-id 4.4.4.4net 1.99.34.4 0.0.0.0 area 0net 1.99.45.4 0.0.0.0 area 0net 4.4.4.4 0.0.0.0 area 0</td>
+<td>router ospf 50router-id 5.5.5.5net 1.99.45.5 0.0.0.0 area 0net 5.5.5.5 0.0.0.0 area 0</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>查看配置是否正确</li>
+</ol>
+<p>（1）使用show ip ospf nei命令查看OSPF邻居关系</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps11.jpg" class="" title="img"> 
+
+<p>表明邻居关系已经建立成功。</p>
+<p>（2）使用show ip ospf data命令查看OSPF LS数据库</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps12.jpg" class="" title="img"> 
+
+<p>OSPF数据库中的链路状态分为两部分：路由器链路状态和网络链路状态</p>
+<p>路由器R3发布的链路状态信息包括三条链路：3.3.3.3、1.99.34.3、1.99.23.3</p>
+<p>（3）使用show ip route命令查看公网路由表</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps13.jpg" class="" title="img"> 
+
+<p>可以看到路由器R2中包含了域内各网络路由。</p>
+<p>（4）使用ping命令查看域内各路由器之间是否互通</p>
+<p>在R2路由器上ping R5，查看是否实现互通</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps14.jpg" class="" title="img"> 
+
+<h2 id="四、域内MPLS配置"><a href="#四、域内MPLS配置" class="headerlink" title="四、域内MPLS配置"></a>四、域内MPLS配置</h2><p>在R2、R3、R4和R5的对应接口配置MPLS，激活LDP。此步骤需注意边缘路由器的接口配置。</p>
+<ol>
+<li>配置命令</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>R2(PE1)</th>
+<th>R3(P1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ip cefmpls ldp router-id lo0mpls label range 200 299int f1/0mpls ip</td>
+<td>ip cefmpls ldp router-id lo0mpls label range 300 399int f0/0mpls ipint f1/0mpls ip</td>
+</tr>
+<tr>
+<td>R4(P2)</td>
+<td>R5(PE2)</td>
+</tr>
+<tr>
+<td>ip cefmpls ldp router-id lo0mpls label range 400 499int f0/0mpls ipint f1/0mpls ip</td>
+<td>ip cefmpls ldp router-id lo0mpls label range 500 599int f0/0mpls ip</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li>分析LDP邻居建立过程</li>
+</ol>
+<p>配置完R2后，可以看到链路上R2在不停发LDP Hello报文。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps15.jpg" class="" title="img"> 
+
+<p>配置完R3后，可以看到LDP邻居建立过程。查看各数据包，分析LDP邻居建立过程：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps16.jpg" class="" title="img"> 
+
+<p>由此可总结出LDP邻居建立过程：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps17.jpg" class="" title="img"> 
+
+<p>查看Hello报文，可以看出，LDP的Hello报文由UDP协议封装</p>
+<ol start="3">
+<li>查看配置是否正确</li>
+</ol>
+<p>配置成功后，使用show命令查看。</p>
+<p>（1）查看LDP邻居</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps22.jpg" class="" title="img"> 
+
+<p>可以看到R3路由器有两个LDP邻居：2.2.2.2、4.4.4.4</p>
+<p>（2）查看标签映射表LIB、路由表RIB、标签转发表LFIB</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps23.jpg" class="" title="img"> 
+
+<p>图中的imp-null 是隐式空标签， 如果匹配到它，就要将标签弹出。</p>
+<p>由此可以看出，R3上的标签映射表可以总结为下表：</p>
+<table>
+<thead>
+<tr>
+<th>目的IP</th>
+<th>本地标签</th>
+<th>R2分配 的标签</th>
+<th>R4分配的标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.99.12.0</td>
+<td></td>
+<td>POP</td>
+<td></td>
+</tr>
+<tr>
+<td>1.99.23.0</td>
+<td>POP</td>
+<td>POP</td>
+<td>400</td>
+</tr>
+<tr>
+<td>1.99.34.0</td>
+<td>POP</td>
+<td>200</td>
+<td>POP</td>
+</tr>
+<tr>
+<td>1.99.45.0</td>
+<td>300</td>
+<td>201</td>
+<td>POP</td>
+</tr>
+<tr>
+<td>2.2.2.2</td>
+<td>301</td>
+<td>POP</td>
+<td>401</td>
+</tr>
+<tr>
+<td>3.3.3.3</td>
+<td>POP</td>
+<td>202</td>
+<td>402</td>
+</tr>
+<tr>
+<td>4.4.4.4</td>
+<td>302</td>
+<td>203</td>
+<td>POP</td>
+</tr>
+<tr>
+<td>5.5.5.5</td>
+<td>303</td>
+<td>204</td>
+<td>403</td>
+</tr>
+</tbody></table>
+<p>查看R3上的路由表：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps24.jpg" class="" title="img"> 
+
+<p>该路由表可简化成下列格式：</p>
+<table>
+<thead>
+<tr>
+<th>目的子网</th>
+<th>下一跳</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.99.23.0</td>
+<td>直连</td>
+</tr>
+<tr>
+<td>1.99.34.0</td>
+<td>直连</td>
+</tr>
+<tr>
+<td>1.99.45.0</td>
+<td>1.99.34.4</td>
+</tr>
+<tr>
+<td>2.2.2.2</td>
+<td>1.99.23.2</td>
+</tr>
+<tr>
+<td>3.3.3.3</td>
+<td>直连</td>
+</tr>
+<tr>
+<td>4.4.4.4</td>
+<td>1.99.34.4</td>
+</tr>
+<tr>
+<td>5.5.5.5</td>
+<td>1.99.34.4</td>
+</tr>
+</tbody></table>
+<p>由此可以得出R3上的标签转发表应生成如下：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps25.png" class="" title="img">
+
+<p>验证：查看R3上的标签转发表：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps26.jpg" class="" title="img"> 
+
+<p>符合前面表格</p>
+<p>（4）查看MPLS域内数据封装过程</p>
+<p>在R2上traceroute R5，查看数据包的标签封装过程</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps27.jpg" class="" title="img"> 
+
+<p>（5）小结：MPLS网络中的数据传递过程：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps28.jpg" class="" title="img"> 
+
+<p>看到，数据包在1.99.23.0链路上标签为303，在1.99.34.0链路上标签为403，在1.99.45.0链路上无标签，此为倒数第二跳弹栈技术。</p>
+<h2 id="五、PE上VRF配置"><a href="#五、PE上VRF配置" class="headerlink" title="五、PE上VRF配置"></a>五、PE上VRF配置</h2><h3 id="1-配置命令"><a href="#1-配置命令" class="headerlink" title="1. 配置命令"></a>1. 配置命令</h3><p>在R2(PE1)和R5(PE2)上配置VRF，把对应接口放入VRF中</p>
+<p>配置命令如下：</p>
+<table>
+<thead>
+<tr>
+<th>R2(PE1)</th>
+<th>R5(PE2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ip vrf VPN1_VRFrd 1:1route-target export 2345:2route-target import 2345:5int f0/0ip vrf for VPN1_VRFip addr 1.99.12.2 255.255.255.0</td>
+<td>ip vrf VPN1_VRFrd 1:1route-target export 2345:5route-target import 2345:2int f1/0ip vrf for VPN1_VRFip addr 1.99.56.5 255.255.255.0</td>
+</tr>
+</tbody></table>
+<p>注意两个VRF中的RT值配置。</p>
+<h3 id="2-查看配置是否正确"><a href="#2-查看配置是否正确" class="headerlink" title="2. 查看配置是否正确"></a>2. 查看配置是否正确</h3><p>使用show命令查看VRF路由表和公网路由表，注意配置VRF前后公网路由表的变化。</p>
+<p>（1）配置VRF前，查看公网路由：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps29.png" class="" title="img"><img src="/2022/12/10/MPLS-VPN-single/wps30.jpg" class="" title="img"> 
+
+<p>注意此时公网路由中有1.99.12.0网段路由</p>
+<p>（2）配置VRF后，查看公网路由：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps31.jpg" class="" title="img"> 
+
+<p>注意：此时公网路由中无1.99.12.0网段</p>
+<p>（3）配置VRF后，查看私网路由：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps32.png" class="" title="img"><img src="/2022/12/10/MPLS-VPN-single/wps33.jpg" class="" title="img"> 
+
+<p>注意，此时1.99.12.0网段已放置到VPN1_VRF的私网路由中，此时，R2路由器内部维护两个路由表：私网路由和公网路由，且PE-CE间接口放置到公网中</p>
+<p>（4）配置VRF后，查看VRF参数：</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps35.jpg" class="" title="img">
+
+
+
+<h2 id="六、PE-CE之间路由配置"><a href="#六、PE-CE之间路由配置" class="headerlink" title="六、PE-CE之间路由配置"></a>六、PE-CE之间路由配置</h2><p>PE和CE之间可以使用任意路由协议，本例中在R1(CE1)-R2(PE1)之间使用OSPF协议，在R5(PE2)-R6(CE2)之间使用RIP协议</p>
+<h3 id="1-配置CE1-PE1之间的OSPF协议"><a href="#1-配置CE1-PE1之间的OSPF协议" class="headerlink" title="1. 配置CE1-PE1之间的OSPF协议"></a>1. 配置CE1-PE1之间的OSPF协议</h3><p>（1）配置命令如下：</p>
+<p>表9 CE1-PE1之间OSPF协议配置</p>
+<table>
+<thead>
+<tr>
+<th>R1(CE1)</th>
+<th>R2(PE1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>router ospf 1router-id 1.1.1.1network 1.1.1.1 0.0.0.0 area 1network 1.99.12.1 0.0.0.0 area 1</td>
+<td>router ospf 1 vrf VPN1_VRFnetwork 1.99.12.2 0.0.0.0 area 1</td>
+</tr>
+</tbody></table>
+<p>（2）查看R2的VRF路由表，确定其中是否包含CE1上路由。（此步骤时间较长）</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps38.jpg" class="" title="img"> 
+
+<p>由上可见，此时VRF表中含有1.99.12.0和1.1.1.1两项路由，且此时1.1.1.1路由类型为O，说明此路由来自于OSPF协议。</p>
+<h3 id="2-配置CE2-PE2之间的RIP协议"><a href="#2-配置CE2-PE2之间的RIP协议" class="headerlink" title="2. 配置CE2-PE2之间的RIP协议"></a>2. 配置CE2-PE2之间的RIP协议</h3><p>（1）配置命令如下</p>
+<p>表10 CE1-PE1之间RIP协议配置</p>
+<table>
+<thead>
+<tr>
+<th>R5(PE2)</th>
+<th>R6(CE2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>router ripaddress-family ipv4 vrf VPN1_VRFversion 2no auto-summarynetwork 1.99.56.5</td>
+<td>router ripversion 2no auto-summarynetwork 6.6.6.6network 1.99.56.6</td>
+</tr>
+</tbody></table>
+<p>（2）查看R5中私网路由</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps40.jpg" class="" title="img"> 
+
+
+
+<p>由此可见，此时R5的VRF中包含两条路由：1.99.56.0和6.6.6.6，且路由6.6.6.6为RIP协议引入，配置成功。</p>
+<h2 id="七、配置MP-iBGP协议"><a href="#七、配置MP-iBGP协议" class="headerlink" title="七、配置MP-iBGP协议"></a>七、配置MP-iBGP协议</h2><h3 id="1-配置命令-1"><a href="#1-配置命令-1" class="headerlink" title="1. 配置命令"></a>1. 配置命令</h3><p>在PE1和PE2上配置MP-iBGP协议，此步骤需一定时间</p>
+<p>配置命令如下：</p>
+<p>表11 MP-iBGP协议配置</p>
+<table>
+<thead>
+<tr>
+<th>R2(PE1)</th>
+<th>R5(PE2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>router bgp 2345bgp router-id 2.2.2.2no bgp default ipv4-unicastneighbor 5.5.5.5 remote 2345neighbor 5.5.5.5 update-source loopback 0address-family vpnv4neighbor 5.5.5.5 activateneighbor 5.5.5.5 send-community extendedrouter ospf 1 vrf VPN1_VRFredistribute bgp 2345 subnetsrouter bgp 2345address-family ipv4 vrf VPN1_VRFredistribute ospf 1 match internal externalno synchronization</td>
+<td>router bgp 2345bgp router-id 5.5.5.5no bgp default ipv4-unicastneighbor 2.2.2.2 remote 2345neighbor 2.2.2.2 update-source loopback 0address-family vpnv4neighbor 2.2.2.2 activateneighbor 2.2.2.2 send-community extendedrouter ripaddress-family ipv4 vrf VPN1_VRFredistribute bgp 2345 metric transparentrouter bgp 2345address-family ipv4 vrf VPN1_VRFredistribute ripexit-address-family</td>
+</tr>
+</tbody></table>
+<h3 id="2-查看配置是否正确-1"><a href="#2-查看配置是否正确-1" class="headerlink" title="2. 查看配置是否正确"></a>2. 查看配置是否正确</h3><p>此时查看PE1上VRF路由</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps43.jpg" class="" title="img"> 
+
+<p>可以看出，此时PE1上的VRF表中已经获得CE2路由6.6.6.6</p>
+<h3 id="3-结果分析"><a href="#3-结果分析" class="headerlink" title="3. 结果分析"></a>3. 结果分析</h3><p>综合上述路由协议配置，可以得出MPLS VPN网络内的路由协议分布如下。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps44.jpg" class="" title="img"> 
+
+<p>此时可以查看R2-R3链路上的BGP数据包，可以查到R2和R5之间互发的BGP更新报文中分别装载了目的网络、私网标签、RD值、RT值。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps45.jpg" class="" title="img"><img src="/2022/12/10/MPLS-VPN-single/wps48.png" class="" title="img"> 
+
+<h2 id="八、VPN客户端互通测试"><a href="#八、VPN客户端互通测试" class="headerlink" title="八、VPN客户端互通测试"></a>八、VPN客户端互通测试</h2><h3 id="1-测试CE1和CE2之间的互通"><a href="#1-测试CE1和CE2之间的互通" class="headerlink" title="1. 测试CE1和CE2之间的互通"></a>1. 测试CE1和CE2之间的互通</h3><img src="/2022/12/10/MPLS-VPN-single/wps49.jpg" class="" title="img"> 
+
+<p>此时两个客户端可以ping通</p>
+<h3 id="2-使用traceroute命令，查看标签"><a href="#2-使用traceroute命令，查看标签" class="headerlink" title="2. 使用traceroute命令，查看标签"></a>2. 使用traceroute命令，查看标签</h3><p>在R1上使用traceroute命令，发现无法查看标签</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps50.jpg" class="" title="img"> 
+
+<p>在R1的f0/0接口开通MPLS，再使用traceroute命令，此时可以查看到标签。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps51.jpg" class="" title="img"> 
+
+<p>分析私网数据在MPLS VPN结构中传递过程，在PE1封装了两个标签，栈底标签为506，栈顶标签为303，其中私网标签和前面BGP协议携带的私网标签一致，栈顶标签和R2中的标记信息库中的标签一致。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps52.png" class="" title="img">  图37 
+
+<p>此时还可以在沿途路由器上查看各路由器的标签转发表：</p>
+<p>（1）在R2上查看标签压入情况</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps54.jpg" class="" title="img"> 
+
+<p>（2）在R3上查看LFIB</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps57.jpg" class="" title="img"> 
+
+<p>（3）在R4上查看LFIB</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps59.jpg" class="" title="img"> 
+
+<p>（4）最后在R5上使用show mpls forwarding-table vrf VPN1_VRF命令查看。</p>
+<img src="/2022/12/10/MPLS-VPN-single/wps61.jpg" class="" title="img"> 
+
+<p>结果符合前面traceroute过程。</p>
+
+      
+      <blockquote>
+        
+        <strong>PermaLink: </strong><br><a href="http://example.com/2022/12/10/MPLS-VPN-single/">http://example.com/2022/12/10/MPLS-VPN-single/</a>
+      </blockquote>
+    </div>
+    <footer class="mdui-card-actions">
+      
+      
+    </footer>
+    
+  </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
+
+
+  <nav id="paginator">
+    
+    <div class="spacer"></div>
+    
+      <a rel="next" class="extend next" href="/2022/12/10/Hub-Spoke/">
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'MPLS之Hub and Spoke实验'}">Next</span>
+        <button aria-label="next" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_forward</i></button>
+      </a>
+    
+  </nav>
+
+
+
+
+
+</main>
+  <footer id="footer" class="mdui-m-t-5 mdui-p-y-3 mdui-color-theme">
+  <div class="mdui-p-y-0 mdui-text-center">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  <div class="mdui-p-y-1 mdui-text-center">
+    Copyright &copy; 2022 sunxling<br>
+    Powered by <a href="https://hexo.io/" target="_blank" class="mdui-text-color-theme-accent">Hexo</a>
+    
+  </div>
+</footer>
+
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_upward</i></button>
+  
+  
+<script src="/js/mdui.js"></script>
+<script src="/js/script.js"></script>
+
+  
+<script src="/custom.js"></script>
+
+</body>
+</html>
