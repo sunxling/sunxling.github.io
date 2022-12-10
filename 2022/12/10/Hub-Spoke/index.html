@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+
+  
+  <title>MPLS之Hub and Spoke实验 | Hexo</title>
+
+  <link rel="shortcut icon" href="/images/favicon.png">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <meta name="description" content="实验目的搭建Hub and Spoke网络，实现分部1到分部2之间可以通过总部网络实现互通，验证分部之间的流量是如何经过总部内网进行传送的。 实验环境GNS3 2.2.34 实验步骤1. 搭建网络拓扑在GNS3中搭建网络拓扑如下图：   2. 接口IP地址配置使用config t命令进入配置模式，然后进行接口IP地址配置 12345678910111213141516171819202122232">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MPLS之Hub and Spoke实验">
+<meta property="og:url" content="http://example.com/2022/12/10/Hub-Spoke/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="实验目的搭建Hub and Spoke网络，实现分部1到分部2之间可以通过总部网络实现互通，验证分部之间的流量是如何经过总部内网进行传送的。 实验环境GNS3 2.2.34 实验步骤1. 搭建网络拓扑在GNS3中搭建网络拓扑如下图：   2. 接口IP地址配置使用config t命令进入配置模式，然后进行接口IP地址配置 12345678910111213141516171819202122232">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222146953.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222208515.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222218254.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222226783.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222235385.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222244737.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222257879.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222303596.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222311853.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222317251.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222330945.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222343976.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222357432.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222403562.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222411967.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222418659.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222426550.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222434786.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222442083.png">
+<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222448237.png">
+<meta property="article:published_time" content="2022-12-10T14:28:28.000Z">
+<meta property="article:modified_time" content="2022-12-10T14:29:13.465Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222146953.png">
+
+  <meta name="keywords" content="">
+  <meta name="format-detection" content="telephone=no,email=no">
+  <meta name="theme-color" content="#9C27B0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Hexo">
+  <meta name="msapplication-starturl" content="http://example.com/2022/12/10/Hub-Spoke/">
+  <meta name="msapplication-navbutton-color" content="#9C27B0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Hexo">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="/images/favicon.png">
+
+  
+    <link rel="canonical" href="http://example.com/2022/12/10/Hub-Spoke/">
+  
+
+  
+  
+
+  
+  
+  
+
+  
+<link rel="stylesheet" href="/css/mdui.css">
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/custom.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
+  <script>var a=localStorage.getItem("mdui-theme-layout-dark");if(a){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){document.getElementsByTagName("body")[0].className+=" mdui-theme-layout-dark"};</script>
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(!a){document.getElementsByTagName("body")[0].className+=" mdui-drawer-body-left"};</script>
+  <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
+  <div class="mdui-toolbar mdui-color-theme">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+    <a href="/" class="mdui-typo-headline">Hexo</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: 'Search'}"><i class="mdui-icon material-icons">search</i></a>
+    <a href="/atom.xml" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'RSS'}"><i class="mdui-icon material-icons">rss_feed</i></a>
+  </div>
+</header>
+<div class="mdui-dialog" id="search">
+  
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="请输入关键字"><input type="hidden" name="sitesearch" value="http://example.com"></form>
+    <div class="search-result"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer mdui-drawer-full-height">
+  <script>var a=localStorage.getItem("mdui-drawer-close");if(a){document.getElementById("sidebar").className+=" mdui-drawer-close"};</script>
+  <div class="mdui-grid-tile">
+    <img src="/images/banner.png" style="height: 160px;">
+    <img src="/images/avatar.png" class="avatar-animation" style="position: absolute; top: 10%; left: 24px; width: 64px; height: 64px; border: 2px solid #fff; border-radius: 50%;">
+    <div class="mdui-grid-tile-actions">
+      <div class="mdui-grid-tile-text">
+        <div class="mdui-grid-tile-title">John Doe</div>
+        <div class="mdui-grid-tile-subtitle"><i class="mdui-icon material-icons">art_track</i></div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    <a href="/" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">home</i>
+      <div class="mdui-list-item-content">Home</div>
+    </a>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-0");if(a){document.getElementsByClassName("mdui-collapse-item")[0].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">archive</i>
+        <div class="mdui-list-item-content">Archive</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2022/12/">December 2022<span class="mdui-ripple sidebar_archives-count">2</span></a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-1");if(a){document.getElementsByClassName("mdui-collapse-item")[1].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">class</i>
+        <div class="mdui-list-item-content">Category</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Categories</a>
+        
+      </div>
+    </div>
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-2");if(a){document.getElementsByClassName("mdui-collapse-item")[2].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-brown">bookmark</i>
+        <div class="mdui-list-item-content">Tag</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Tags</a>
+        
+      </div>
+    </div>
+    <a href="/about" class="mdui-list-item mdui-ripple">
+      <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-purple">person</i>
+      <div class="mdui-list-item-content">About</div>
+    </a>
+  </div>
+
+  <div class="mdui-divider"></div>
+
+  <div class="mdui-list" mdui-collapse="{accordion: true}">
+    
+      <a href="/timeline" class="mdui-list-item mdui-ripple">时间轴</a>
+    
+      <a href="/tagcloud" class="mdui-list-item mdui-ripple">标签云</a>
+    
+      <a href="/gallery" class="mdui-list-item mdui-ripple">相册</a>
+    
+    <div class="mdui-collapse-item">
+      <script>var a=localStorage.getItem("mdui-collapse-item-3");if(a){document.getElementsByClassName("mdui-collapse-item")[3].className+=" mdui-collapse-item-open"};</script>
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <div class="mdui-list-item-content">Links</div>
+        <i class="mdui-list-item-icon mdui-icon material-icons">link</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
+        
+        
+          <a href="javascript:;" class="mdui-list-item mdui-p-l-2 mdui-text-color-theme mdui-ripple" style="justify-content: center;">No Links</a>
+        
+      </div>
+    </div>
+  </div>
+</aside>
+
+  <main id="main" class="mdui-m-t-5 fadeIn animated">
+  
+<link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  <style>#main article .mdui-card-content .center-block{display:block!important;margin-right:auto!important;margin-left:auto!important}</style>
+  <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
+  <article class="mdui-card mdui-m-b-5">
+    <header class="mdui-card-media">
+      <img src="/images/random/material-15.png" style="max-height: 240px;">
+      <div class="mdui-card-media-covered">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">MPLS之Hub and Spoke实验</div>
+          <div class="mdui-card-primary-subtitle"><i class="iconfont">&#xe697;</i> 2022-12-10 / <i class="iconfont">&#xe601;</i> John Doe</div>
+        </div>
+      </div>
+      <div class="mdui-card-menu">
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#qrcode', align: 'right'}"><i class="mdui-icon material-icons">devices</i></button>
+          <ul class="mdui-menu" id="qrcode">
+            
+              <li class="mdui-menu-item"><a class="mdui-text-center mdui-ripple">发送到手机</a></li>
+            
+            <li class="mdui-menu-item" disabled>
+              
+                <img src="//chart.googleapis.com/chart?cht=qr&chs=246x246&chl=http://example.com/2022/12/10/Hub-Spoke/&chld=M|2">
+              
+            </li>
+          </ul>
+        
+        
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
+          <ul class="mdui-menu" id="share_menu">
+            <li class="mdui-menu-item">
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=MPLS之Hub and Spoke实验&url=http://example.com/2022/12/10/Hub-Spoke/&pic=http://example.com/images/favicon.png&searchPic=false&style=simple" target="_blank" class="mdui-ripple">Share to Weibo</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://twitter.com/intent/tweet?text=MPLS之Hub and Spoke实验&url=http://example.com/2022/12/10/Hub-Spoke/&via=John Doe" target="_blank" class="mdui-ripple">Share to Twitter</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to Facebook</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://plus.google.com/share?url=http://example.com/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to Google+</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://example.com/2022/12/10/Hub-Spoke/&title=MPLS之Hub and Spoke实验" target="_blank" class="mdui-ripple">Share to LinkedIn</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=Hexo&title=MPLS之Hub and Spoke实验&pics=http://example.com/images/favicon.png&url=http://example.com/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to QQ</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="https://telegram.me/share/url?url=http://example.com/2022/12/10/Hub-Spoke/&text=MPLS之Hub and Spoke实验" target="_blank" class="mdui-ripple">Share to Telegram</a>
+            </li>
+          </ul>
+        
+      </div>
+    </header>
+    <div class="mdui-card-content mdui-typo">
+      <h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>搭建Hub and Spoke网络，实现分部1到分部2之间可以通过总部网络实现互通，验证分部之间的流量是如何经过总部内网进行传送的。</p>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><p>GNS3 2.2.34</p>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="1-搭建网络拓扑"><a href="#1-搭建网络拓扑" class="headerlink" title="1. 搭建网络拓扑"></a>1. 搭建网络拓扑</h3><p>在GNS3中搭建网络拓扑如下图：</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222146953.png" class="" title="image-20221210222146953">
+
+<h3 id="2-接口IP地址配置"><a href="#2-接口IP地址配置" class="headerlink" title="2. 接口IP地址配置"></a>2. 接口IP地址配置</h3><p>使用<code>config t</code>命令进入配置模式，然后进行接口IP地址配置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">R1:</span><br><span class="line">int lo0</span><br><span class="line">ip address 1.1.1.1 255.255.255.255</span><br><span class="line">int f0/0</span><br><span class="line">ip address 13.1.1.1 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line">int f1/0</span><br><span class="line">ip address 12.1.1.1 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line"></span><br><span class="line">R2:</span><br><span class="line">int lo0</span><br><span class="line">ip address 2.2.2.2 255.255.255.255</span><br><span class="line">int f0/0</span><br><span class="line">ip address 12.1.1.2 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line">int f1/0</span><br><span class="line">ip address 23.1.1.1 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line"></span><br><span class="line">R3:</span><br><span class="line">int lo0</span><br><span class="line">ip address 3.3.3.3 255.255.255.255</span><br><span class="line">int f0/0</span><br><span class="line">ip address 13.1.1.2 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line">int f1/0</span><br><span class="line">ip address 23.1.1.2 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line">int f2/0</span><br><span class="line">ip address 34.1.1.1 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line">int f3/0</span><br><span class="line">ip address 35.1.1.1 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line"></span><br><span class="line">R4:</span><br><span class="line">int lo0</span><br><span class="line">ip address 4.4.4.4 255.255.255.255</span><br><span class="line">int f0/0</span><br><span class="line">ip address 34.1.1.2 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line">interface f1/0</span><br><span class="line">ip address 46.1.1.1 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line"></span><br><span class="line">R5:</span><br><span class="line">int lo0</span><br><span class="line">ip address 5.5.5.5 255.255.255.255</span><br><span class="line">int f0/0</span><br><span class="line">ip address 35.1.1.2 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line">int f1/0</span><br><span class="line">ip address 57.1.1.1 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line"></span><br><span class="line">R6:</span><br><span class="line">int lo0</span><br><span class="line">ip address 6.6.6.6 255.255.255.255</span><br><span class="line">int f0/0</span><br><span class="line">ip address 46.1.1.2 255.255.255.252</span><br><span class="line">no sh</span><br><span class="line"> </span><br><span class="line">R7:</span><br><span class="line">int lo0</span><br><span class="line">ip address 7.7.7.7 255.255.255.255</span><br><span class="line">int f0/0</span><br><span class="line">ip address 57.1.1.2 255.255.255.252</span><br><span class="line">no sh</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，可以使用<code>do show ip int b</code>命令查看各接口配置是否正确。</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222208515.png" class="" title="image-20221210222208515">
+
+<h3 id="3-域内路由协议配置"><a href="#3-域内路由协议配置" class="headerlink" title="3. 域内路由协议配置"></a>3. 域内路由协议配置</h3><p>此步骤配置AS100域内路由协议</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">R3:</span><br><span class="line">router ospf 1</span><br><span class="line">router-id 3.3.3.3</span><br><span class="line">network 3.3.3.3 0.0.0.0 area 0</span><br><span class="line">network 34.1.1.0 0.0.0.3 area 0</span><br><span class="line">network 35.1.1.0 0.0.0.3 area 0</span><br><span class="line"></span><br><span class="line">R4:</span><br><span class="line">router ospf 1</span><br><span class="line">router-id 4.4.4.4</span><br><span class="line">network 4.4.4.4 0.0.0.0 area 0</span><br><span class="line">network 34.1.1.0 0.0.0.3 area 0</span><br><span class="line"></span><br><span class="line">R5:</span><br><span class="line">router ospf 1</span><br><span class="line">router-id 5.5.5.5</span><br><span class="line">network 5.5.5.5 0.0.0.0 area 0</span><br><span class="line">network 35.1.1.0 0.0.0.3 area 0</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，可以使用下列命令查看OSPF协议是否配置准确，并可使用wireshark抓包分析OSPF协议初始化过程。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看OSPF邻居</span></span><br><span class="line">show ip ospf nei</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看OSPF链路数据库</span></span><br><span class="line">show ip ospf data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在R3上查看公网路由，是否有到5.5.5.5的路由</span></span><br><span class="line">show ip route</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在R3上ping R5，查看路由器之间的可达性</span></span><br><span class="line">ping 5.5.5.5</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222218254.png" class="" title="image-20221210222218254">
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222226783.png" class="" title="image-20221210222226783">
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222235385.png" class="" title="image-20221210222235385">
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222244737.png" class="" title="image-20221210222244737">
+
+<h3 id="4-MPLS协议配置"><a href="#4-MPLS协议配置" class="headerlink" title="4. MPLS协议配置"></a>4. MPLS协议配置</h3><p>此步骤将AS100域内路由器对应接口激活MPLS协议</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">R3:</span><br><span class="line">ip cef</span><br><span class="line">mpls ldp router-id lo0</span><br><span class="line">mpls label range 300 399</span><br><span class="line">int f2/0</span><br><span class="line">mpls ip</span><br><span class="line">int f3/0</span><br><span class="line">mpls ip</span><br><span class="line"></span><br><span class="line">R4:</span><br><span class="line">ip cef</span><br><span class="line">mpls ldp router-id lo0</span><br><span class="line">mpls label range 400 499</span><br><span class="line">int f0/0</span><br><span class="line">mpls ip</span><br><span class="line"></span><br><span class="line">R5:</span><br><span class="line">ip cef</span><br><span class="line">mpls ldp router-id lo0</span><br><span class="line">mpls label range 500 599</span><br><span class="line">int f0/0</span><br><span class="line">mpls ip</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，可以使用下列命令查看MPLS协议配置是否正确，并可以使用wireshark查看LDP初始化过程。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看LDP邻居</span></span><br><span class="line">show mpls ldp nei</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看LIB</span></span><br><span class="line">show mpls ldp bindings</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看RIB</span></span><br><span class="line">show ip route</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看LFIB</span></span><br><span class="line">show mpls forwarding-table</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看FIB</span></span><br><span class="line">show ip cef</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在R3上traceroute R5，查看MPLS域内数据封装过程（此步骤课忽略）</span></span><br><span class="line">traceroute 5.5.5.5</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222257879.png" class="" title="image-20221210222257879">
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222303596.png" class="" title="image-20221210222303596">
+
+<h3 id="5-VPN配置"><a href="#5-VPN配置" class="headerlink" title="5. VPN配置"></a>5. VPN配置</h3><p>此处配置R3、R4、R5的VRF。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">R3：</span><br><span class="line">ip vrf import_in</span><br><span class="line">rd 100:11</span><br><span class="line">route-target import 100:67</span><br><span class="line">int f0/0</span><br><span class="line">ip vrf <span class="keyword">for</span> import_in</span><br><span class="line">ip addr 13.1.1.2 255.255.255.252</span><br><span class="line">ip vrf export_out</span><br><span class="line">rd 100:22</span><br><span class="line">route-target <span class="built_in">export</span> 100:12</span><br><span class="line">int f1/0</span><br><span class="line">ip vrf <span class="keyword">for</span> export_out</span><br><span class="line">ip addr 23.1.1.2 255.255.255.252</span><br><span class="line"></span><br><span class="line">R4：</span><br><span class="line">ip vrf VPN1</span><br><span class="line">rd 100:6</span><br><span class="line">route-target import 100:12</span><br><span class="line">route-target <span class="built_in">export</span> 100:67</span><br><span class="line">int f1/0</span><br><span class="line">ip vrf <span class="keyword">for</span> VPN1</span><br><span class="line">ip addr 46.1.1.1 255.255.255.252</span><br><span class="line"></span><br><span class="line">R5：</span><br><span class="line">ip vrf VPN2</span><br><span class="line">rd 100:7</span><br><span class="line">route-target import 100:12</span><br><span class="line">route-target <span class="built_in">export</span> 100:67</span><br><span class="line">int f1/0</span><br><span class="line">ip vrf <span class="keyword">for</span> VPN2</span><br><span class="line">ip addr 57.1.1.1 255.255.255.252</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，可以通过下列命令查看VRF配置是否正确</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看私网路由表，确认对应接口路由是否已从公网路由表转移到私网路由表</span></span><br><span class="line">show ip route vrf import_in</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看VRF参数</span></span><br><span class="line">show ip vrf detail</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222311853.png" class="" title="image-20221210222311853">
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222317251.png" class="" title="image-20221210222317251">
+
+<h3 id="6-配置BGP协议"><a href="#6-配置BGP协议" class="headerlink" title="6. 配置BGP协议"></a>6. 配置BGP协议</h3><p>此步骤配置总部内部路由、总部、分部和MPLS域之间的路由使用BGP协议。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">R1:</span><br><span class="line">router bgp 120</span><br><span class="line">bgp router-id 1.1.1.1</span><br><span class="line">bgp log-neighbor-changes</span><br><span class="line">network 1.1.1.1 mask 255.255.255.255</span><br><span class="line">network 12.1.1.0 mask 255.255.255.252</span><br><span class="line">network 13.1.1.0 mask 255.255.255.252</span><br><span class="line">neighbor 12.1.1.2 remote-as 120</span><br><span class="line">neighbor 12.1.1.2 next-hop-self</span><br><span class="line">neighbor 13.1.1.2 remote-as 100</span><br><span class="line"></span><br><span class="line">R2:</span><br><span class="line">router bgp 120</span><br><span class="line">bgp router-id 2.2.2.2</span><br><span class="line">bgp log-neighbor-changes</span><br><span class="line">network 2.2.2.2 mask 255.255.255.255</span><br><span class="line">network 23.1.1.0 mask 255.255.255.252</span><br><span class="line">neighbor 12.1.1.1 remote-as 120</span><br><span class="line">neighbor 12.1.1.1 next-hop-self</span><br><span class="line">neighbor 23.1.1.2 remote-as 100</span><br><span class="line"></span><br><span class="line">R3:</span><br><span class="line">router bgp 100</span><br><span class="line">bgp router-id 3.3.3.3</span><br><span class="line">bgp log-neighbor-changes</span><br><span class="line">no bgp default ipv4-unicast</span><br><span class="line">neighbor 4.4.4.4 remote-as 100</span><br><span class="line">neighbor 4.4.4.4 update-source Loopback0</span><br><span class="line">neighbor 5.5.5.5 remote-as 100</span><br><span class="line">neighbor 5.5.5.5 update-source Loopback0</span><br><span class="line">address-family vpnv4</span><br><span class="line">neighbor 4.4.4.4 activate</span><br><span class="line">neighbor 4.4.4.4 send-community extended</span><br><span class="line">neighbor 5.5.5.5 activate</span><br><span class="line">neighbor 5.5.5.5 send-community extended</span><br><span class="line">address-family ipv4 vrf export_out</span><br><span class="line">neighbor 23.1.1.1 remote-as 120</span><br><span class="line">neighbor 23.1.1.1 activate</span><br><span class="line">address-family ipv4 vrf import_in</span><br><span class="line">neighbor 13.1.1.1 remote-as 120</span><br><span class="line">neighbor 13.1.1.1 activate</span><br><span class="line">  </span><br><span class="line">R4:</span><br><span class="line">router bgp 100</span><br><span class="line">bgp router-id 4.4.4.4</span><br><span class="line">bgp log-neighbor-changes</span><br><span class="line">no bgp default ipv4-unicast</span><br><span class="line">neighbor 3.3.3.3 remote-as 100</span><br><span class="line">neighbor 3.3.3.3 update-source Loopback0</span><br><span class="line">address-family vpnv4</span><br><span class="line">neighbor 3.3.3.3 activate</span><br><span class="line">neighbor 3.3.3.3 send-community extended</span><br><span class="line">address-family ipv4 vrf VPN1</span><br><span class="line">neighbor 46.1.1.2 remote-as 60</span><br><span class="line">neighbor 46.1.1.2 activate</span><br><span class="line"></span><br><span class="line">R5:</span><br><span class="line">router bgp 100</span><br><span class="line">bgp router-id 5.5.5.5</span><br><span class="line">bgp log-neighbor-changes</span><br><span class="line">no bgp default ipv4-unicast</span><br><span class="line">neighbor 3.3.3.3 remote-as 100</span><br><span class="line">neighbor 3.3.3.3 update-source Loopback0</span><br><span class="line">address-family vpnv4</span><br><span class="line">neighbor 3.3.3.3 activate</span><br><span class="line">neighbor 3.3.3.3 send-community extended</span><br><span class="line">address-family ipv4 vrf VPN2</span><br><span class="line">neighbor 57.1.1.2 remote-as 70</span><br><span class="line">neighbor 57.1.1.2 activate</span><br><span class="line"></span><br><span class="line">R6:</span><br><span class="line">router bgp 60</span><br><span class="line">bgp router-id 6.6.6.6</span><br><span class="line">bgp log-neighbor-changes</span><br><span class="line">network 6.6.6.6 mask 255.255.255.255</span><br><span class="line">network 46.1.1.0 mask 255.255.255.252</span><br><span class="line">neighbor 46.1.1.1 remote-as 100</span><br><span class="line"> </span><br><span class="line">R7:</span><br><span class="line">router bgp 70</span><br><span class="line">bgp router-id 7.7.7.7</span><br><span class="line">bgp log-neighbor-changes</span><br><span class="line">network 7.7.7.7 mask 255.255.255.255</span><br><span class="line">network 57.1.1.0 mask 255.255.255.252</span><br><span class="line">neighbor 57.1.1.1 remote-as 100</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-验证"><a href="#7-验证" class="headerlink" title="7. 验证"></a>7. 验证</h3><ul>
+<li><p>在R3上查看BGP vpnv4邻居情况</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222330945.png" class="" title="image-20221210222330945">
+
+<p>由此可以看出，其四个邻居建立成功，并且收到相应的路由。</p>
+</li>
+<li><p>在R3上查看vpn信息</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222343976.png" class="" title="image-20221210222343976">
+
+<p>从以上可知RD为100:11的有import_in 为100:67，而PE-R4及PE-R5的export为100:60、100:70，因此R6和R7的路由加入路由表项中，而RD 为100:22的VRF中，并没有设置import，不能从BGP ×××V4中导入任何路由，因此其收到的路由都是CE-R2通过EBGP传递过来的，其下跳都为23.1.1.1，且其中没有6.6.6.6和7.7.7.7的路由</p>
+</li>
+<li><p>在R2上查看BGP路由情况</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222357432.png" class="" title="image-20221210222357432">
+
+<p>从上可看出，其收到的路由都是来至于R1，并且通过ibgp传递过来，并且经过的AS号为100 60</p>
+</li>
+<li><p>在R3上查看export_out表项</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222403562.png" class="" title="image-20221210222403562">
+
+<p>从此可知，路由表中并没有R7及R6的路由，为什么R2从R1那儿收到了，没有传递给R3呢？因为BGP的防环机制，因为R7及R6的路由也是经过PE-R3传输给CE-R1的，其属性值带得有AS 100，因此在R2传递给R3时，查看到其带有自身AS号，拒绝将其加入路由表，那么此时我们在R6和R7上查看路由情况，会是怎么样呢？</p>
+</li>
+<li><p>分别查看R6和R7的路由</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222411967.png" class="" title="image-20221210222411967">
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222418659.png" class="" title="image-20221210222418659">
+
+<p>从上可知R7上并没有收到R6的路由，R7也没有收到R6的路由，但都能收到R1和R2的路由，其原因是PE-R3上配置的VRF export_out的RT export 为100:12，而在上面提到的VRF export_out中恰好有这些路由表项，在PE-R4和PE-R5上设置的import为100:12，因此能将其加入路由表，传输给CE路由器； </p>
+</li>
+<li><p>现在需要将PE-R3的VRF export_out中收到R6和R7的路由，上面已经提到原因了，因为BGP 的防环机制，所在需要在R3上配置允许AS号相同的路由进入，如下配置</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router bgp 100</span><br><span class="line">address-family ipv4 vrf export_out</span><br><span class="line">neighbor 23.1.1.1 allowas-in 3 //允许其自治系统号重复的次数</span><br></pre></td></tr></table></figure></li>
+<li><p>此时在R3上再次查看bgp路由</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222426550.png" class="" title="image-20221210222426550">
+
+<p>由此可见，R6和R7上的路由已经加入export_out路由表中，并且其下一跳是23.1.1.1，由CE-R2通告过来的，其经过的路径为120 100 60、120 100 70</p>
+</li>
+<li><p>此时在R6和R7上查看公网路由</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222434786.png" class="" title="image-20221210222434786">
+
+<img src="/2022/12/10/Hub-Spoke/image-20221210222442083.png" class="" title="image-20221210222442083">
+
+<p>由此可见，R6和R7上都有到对方的路由</p>
+</li>
+<li><p>此时在R6上traceroute R</p>
+<img src="/2022/12/10/Hub-Spoke/image-20221210222448237.png" class="" title="image-20221210222448237">
+
+<p>从上可知，路径为：R6-&gt;R4-&gt;R3-&gt;R2-&gt;R1-&gt;R3-&gt;R5-&gt;R7</p>
+</li>
+</ul>
+
+      
+      <blockquote>
+        
+        <strong>PermaLink: </strong><br><a href="http://example.com/2022/12/10/Hub-Spoke/">http://example.com/2022/12/10/Hub-Spoke/</a>
+      </blockquote>
+    </div>
+    <footer class="mdui-card-actions">
+      
+      
+    </footer>
+    
+  </article>
+  
+<script src="//cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+  <script>$("#main article .mdui-card-content img.fancybox").on("click",function(e){$.fancybox.open({src:$(this).attr("src")});});</script>
+
+
+  <nav id="paginator">
+    
+      <a rel="prev" class="extend prev" href="/2022/12/10/test-tt/">
+        <button aria-label="prev" class="mdui-btn mdui-btn-raised mdui-btn-icon mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_back</i></button>
+        <span class="mdui-p-x-3" mdui-tooltip="{content: 'test tt'}">Prev</span>
+      </a>
+    
+    <div class="spacer"></div>
+    
+  </nav>
+
+
+
+
+
+</main>
+  <footer id="footer" class="mdui-m-t-5 mdui-p-y-3 mdui-color-theme">
+  <div class="mdui-p-y-0 mdui-text-center">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  <div class="mdui-p-y-1 mdui-text-center">
+    Copyright &copy; 2022 John Doe<br>
+    Powered by <a href="https://hexo.io/" target="_blank" class="mdui-text-color-theme-accent">Hexo</a>
+    
+  </div>
+</footer>
+
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-color-theme-accent mdui-ripple"><i class="mdui-icon material-icons">arrow_upward</i></button>
+  
+  
+<script src="/js/mdui.js"></script>
+<script src="/js/script.js"></script>
+
+  
+<script src="/custom.js"></script>
+
+</body>
+</html>
