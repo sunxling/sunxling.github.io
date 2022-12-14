@@ -14,7 +14,7 @@ IUV开发的4G-LTE仿真软件配置范例。
 
 业务配置1：
 
-{% dplayer "url=业务配置1.mp4" "addition=https://dplayer.daoapp.io/bilibili?aid=4157142" "api=https://api.prprpr.me/dplayer/" "pic=启动画面.png" "id=9E2E3368B56CDBB4" "loop=yes" "theme#b7daff" "autoplay=false" "hotkey=true" "screenshot=true" %}
+{% dplayer "url=业务配置1.mp4" "addition=https://dplayer.daoapp.io/bilibili?aid=4157142" "api=https://api.prprpr.me/dplayer/" "pic=启动画面.PNG" "id=9E2E3368B56CDBB4" "loop=yes" "theme#b7daff" "autoplay=false" "hotkey=true" "screenshot=true" %}
 
 业务配置2：
 
