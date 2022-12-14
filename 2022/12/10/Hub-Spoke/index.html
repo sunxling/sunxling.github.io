@@ -8,58 +8,58 @@
   <meta name="renderer" content="webkit">
 
   
-  <title>MPLS之Hub and Spoke实验 | 晓玲空间</title>
+  <title>MPLS之Hub and Spoke实验 | 我心飞扬</title>
 
   <link rel="shortcut icon" href="/images/favicon.png">
-  <link rel="alternate" href="/atom.xml" title="晓玲空间" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="我心飞扬" type="application/atom+xml">
   <meta name="description" content="实验目的搭建Hub and Spoke网络，实现分部1到分部2之间可以通过总部网络实现互通，验证分部之间的流量是如何经过总部内网进行传送的。 实验环境GNS3 2.2.34 实验步骤1. 搭建网络拓扑在GNS3中搭建网络拓扑如下图：   2. 接口IP地址配置使用config t命令进入配置模式，然后进行接口IP地址配置 12345678910111213141516171819202122232">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MPLS之Hub and Spoke实验">
-<meta property="og:url" content="http://example.com/2022/12/10/Hub-Spoke/index.html">
-<meta property="og:site_name" content="晓玲空间">
+<meta property="og:url" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/index.html">
+<meta property="og:site_name" content="我心飞扬">
 <meta property="og:description" content="实验目的搭建Hub and Spoke网络，实现分部1到分部2之间可以通过总部网络实现互通，验证分部之间的流量是如何经过总部内网进行传送的。 实验环境GNS3 2.2.34 实验步骤1. 搭建网络拓扑在GNS3中搭建网络拓扑如下图：   2. 接口IP地址配置使用config t命令进入配置模式，然后进行接口IP地址配置 12345678910111213141516171819202122232">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222146953.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222208515.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222218254.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222226783.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222235385.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222244737.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222257879.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222303596.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222311853.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222317251.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222330945.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222343976.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222357432.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222403562.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222411967.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222418659.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222426550.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222434786.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222442083.png">
-<meta property="og:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222448237.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222146953.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222208515.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222218254.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222226783.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222235385.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222244737.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222257879.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222303596.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222311853.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222317251.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222330945.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222343976.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222357432.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222403562.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222411967.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222418659.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222426550.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222434786.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222442083.png">
+<meta property="og:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222448237.png">
 <meta property="article:published_time" content="2022-12-10T14:28:28.000Z">
 <meta property="article:modified_time" content="2022-12-10T14:29:13.465Z">
 <meta property="article:author" content="sunxling">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/12/10/Hub-Spoke/image-20221210222146953.png">
+<meta name="twitter:image" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/image-20221210222146953.png">
 
   <meta name="keywords" content="">
   <meta name="format-detection" content="telephone=no,email=no">
   <meta name="theme-color" content="#9C27B0">
 
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="晓玲空间">
-  <meta name="msapplication-starturl" content="http://example.com/2022/12/10/Hub-Spoke/">
+  <meta name="application-name" content="我心飞扬">
+  <meta name="msapplication-starturl" content="http://sunxling.github.io/2022/12/10/Hub-Spoke/">
   <meta name="msapplication-navbutton-color" content="#9C27B0">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="晓玲空间">
+  <meta name="apple-mobile-web-app-title" content="我心飞扬">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="apple-touch-icon" href="/images/favicon.png">
 
   
-    <link rel="canonical" href="http://example.com/2022/12/10/Hub-Spoke/">
+    <link rel="canonical" href="http://sunxling.github.io/2022/12/10/Hub-Spoke/">
   
 
   
@@ -85,7 +85,7 @@
   <header id="header" class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-appbar-inset">
   <div class="mdui-toolbar mdui-color-theme">
     <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
-    <a href="/" class="mdui-typo-headline">晓玲空间</a>
+    <a href="/" class="mdui-typo-headline">我心飞扬</a>
     <div class="mdui-toolbar-spacer"></div>
     <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: 'Search'}"><i class="mdui-icon material-icons">search</i></a>
     <a href="/atom.xml" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'RSS'}"><i class="mdui-icon material-icons">rss_feed</i></a>
@@ -93,7 +93,7 @@
 </header>
 <div class="mdui-dialog" id="search">
   
-    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="请输入关键字"><input type="hidden" name="sitesearch" value="http://example.com"></form>
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="请输入关键字"><input type="hidden" name="sitesearch" value="http://sunxling.github.io"></form>
     <div class="search-result"></div>
   
 </div>
@@ -126,7 +126,7 @@
       </div>
       <div class="mdui-collapse-item-body mdui-list mdui-list-dense">
         
-        <a class="mdui-ripple sidebar_archives-link" href="/archives/2022/12/">December 2022<span class="mdui-ripple sidebar_archives-count">2</span></a>
+        <a class="mdui-ripple sidebar_archives-link" href="/archives/2022/12/">December 2022<span class="mdui-ripple sidebar_archives-count">3</span></a>
         
       </div>
     </div>
@@ -200,7 +200,7 @@
   <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
   <article class="mdui-card mdui-m-b-5">
     <header class="mdui-card-media">
-      <img src="/images/random/material-10.png" style="max-height: 240px;">
+      <img src="/images/random/material-7.png" style="max-height: 240px;">
       <div class="mdui-card-media-covered">
         <div class="mdui-card-primary">
           <div class="mdui-card-primary-title">MPLS之Hub and Spoke实验</div>
@@ -216,7 +216,7 @@
             
             <li class="mdui-menu-item" disabled>
               
-                <img src="//chart.googleapis.com/chart?cht=qr&chs=246x246&chl=http://example.com/2022/12/10/Hub-Spoke/&chld=M|2">
+                <img src="//chart.googleapis.com/chart?cht=qr&chs=246x246&chl=http://sunxling.github.io/2022/12/10/Hub-Spoke/&chld=M|2">
               
             </li>
           </ul>
@@ -225,25 +225,25 @@
           <button class="mdui-btn mdui-btn-icon mdui-text-color-white" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="mdui-icon material-icons">share</i></button>
           <ul class="mdui-menu" id="share_menu">
             <li class="mdui-menu-item">
-              <a href="https://service.weibo.com/share/share.php?appkey=&title=MPLS之Hub and Spoke实验&url=http://example.com/2022/12/10/Hub-Spoke/&pic=http://example.com/images/favicon.png&searchPic=false&style=simple" target="_blank" class="mdui-ripple">Share to Weibo</a>
+              <a href="https://service.weibo.com/share/share.php?appkey=&title=MPLS之Hub and Spoke实验&url=http://sunxling.github.io/2022/12/10/Hub-Spoke/&pic=http://sunxling.github.io/images/favicon.png&searchPic=false&style=simple" target="_blank" class="mdui-ripple">Share to Weibo</a>
             </li>
             <li class="mdui-menu-item">
-              <a href="https://twitter.com/intent/tweet?text=MPLS之Hub and Spoke实验&url=http://example.com/2022/12/10/Hub-Spoke/&via=sunxling" target="_blank" class="mdui-ripple">Share to Twitter</a>
+              <a href="https://twitter.com/intent/tweet?text=MPLS之Hub and Spoke实验&url=http://sunxling.github.io/2022/12/10/Hub-Spoke/&via=sunxling" target="_blank" class="mdui-ripple">Share to Twitter</a>
             </li>
             <li class="mdui-menu-item">
-              <a href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to Facebook</a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u=http://sunxling.github.io/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to Facebook</a>
             </li>
             <li class="mdui-menu-item">
-              <a href="https://plus.google.com/share?url=http://example.com/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to Google+</a>
+              <a href="https://plus.google.com/share?url=http://sunxling.github.io/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to Google+</a>
             </li>
             <li class="mdui-menu-item">
-              <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://example.com/2022/12/10/Hub-Spoke/&title=MPLS之Hub and Spoke实验" target="_blank" class="mdui-ripple">Share to LinkedIn</a>
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://sunxling.github.io/2022/12/10/Hub-Spoke/&title=MPLS之Hub and Spoke实验" target="_blank" class="mdui-ripple">Share to LinkedIn</a>
             </li>
             <li class="mdui-menu-item">
-              <a href="https://connect.qq.com/widget/shareqq/index.html?site=晓玲空间&title=MPLS之Hub and Spoke实验&pics=http://example.com/images/favicon.png&url=http://example.com/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to QQ</a>
+              <a href="https://connect.qq.com/widget/shareqq/index.html?site=我心飞扬&title=MPLS之Hub and Spoke实验&pics=http://sunxling.github.io/images/favicon.png&url=http://sunxling.github.io/2022/12/10/Hub-Spoke/" target="_blank" class="mdui-ripple">Share to QQ</a>
             </li>
             <li class="mdui-menu-item">
-              <a href="https://telegram.me/share/url?url=http://example.com/2022/12/10/Hub-Spoke/&text=MPLS之Hub and Spoke实验" target="_blank" class="mdui-ripple">Share to Telegram</a>
+              <a href="https://telegram.me/share/url?url=http://sunxling.github.io/2022/12/10/Hub-Spoke/&text=MPLS之Hub and Spoke实验" target="_blank" class="mdui-ripple">Share to Telegram</a>
             </li>
           </ul>
         
@@ -352,7 +352,7 @@
       
       <blockquote>
         
-        <strong>PermaLink: </strong><br><a href="http://example.com/2022/12/10/Hub-Spoke/">http://example.com/2022/12/10/Hub-Spoke/</a>
+        <strong>PermaLink: </strong><br><a href="http://sunxling.github.io/2022/12/10/Hub-Spoke/">http://sunxling.github.io/2022/12/10/Hub-Spoke/</a>
       </blockquote>
     </div>
     <footer class="mdui-card-actions">
