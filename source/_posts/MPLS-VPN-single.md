@@ -40,13 +40,65 @@ tags:
 
 ### 2. 配置命令：
 
-| R1(CE1)                                                      | R2(PE1)                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| int f0/0ip address 1.99.12.1 255.255.255.0no shutdownint lo0ip address 1.1.1.1 255.255.255.255 | int f0/0ip address 1.99.12.2 255.255.255.0no shutdownint f1/0ip address 1.99.23.2 255.255.255.0no shutdownint lo0ip address 2.2.2.2 255.255.255.255 |
-| R3(P1)                                                       | R4(P2)                                                       |
-| int f0/0ip address 1.99.23.3 255.255.255.0no shutdownint f1/0ip address 1.99.34.3 255.255.255.0no shutdownint lo0ip address 3.3.3.3 255.255.255.255 | int f0/0ip address 1.99.34.4 255.255.255.0no shutdownint f1/0ip address 1.99.45.4 255.255.255.0no shutdownint lo0ip address 4.4.4.4 255.255.255.255 |
-| R5(PE2)                                                      | R6(CE2)                                                      |
-| int f0/0ip address 1.99.45.5 255.255.255.0no shutdownint f1/0ip address 1.99.56.5 255.255.255.0no shutdownint lo0ip address 5.5.5.5 255.255.255.255 | int f0/0ip address 1.99.56.6 255.255.255.0no shutdownint lo0ip address 6.6.6.6 255.255.255.255 |
+R1:
+
+```sh
+#R1:
+int f0/0
+ip address 1.99.12.1 255.255.255.0
+no shutdown
+int lo0
+ip address 1.1.1.1 255.255.255.255
+
+#R2:
+int f0/0
+ip address 1.99.12.2 255.255.255.0
+no shutdown
+int f1/0
+ip address 1.99.23.2 255.255.255.0
+no shutdown
+int lo0
+ip address 2.2.2.2 255.255.255.255
+
+#R3:
+int f0/0
+ip address 1.99.23.3 255.255.255.0
+no shutdown
+int f1/0
+ip address 1.99.34.3 255.255.255.0
+no shutdown
+int lo0
+ip address 3.3.3.3 255.255.255.255
+
+#R4
+int f0/0
+ip address 1.99.34.4 255.255.255.0
+no shutdown
+int f1/0
+ip address 1.99.45.4 255.255.255.0
+no shutdown
+int lo0
+ip address 4.4.4.4 255.255.255.255
+
+#R5
+int f0/0
+ip address 1.99.45.5 255.255.255.0
+no shutdown
+int f1/0
+ip address 1.99.56.5 255.255.255.0
+no shutdown
+int lo0
+ip address 5.5.5.5 255.255.255.255
+
+#R6
+int f0/0
+ip address 1.99.56.6 255.255.255.0
+no shutdown
+int lo0
+ip address 6.6.6.6 255.255.255.255
+```
+
+
 
 ### 3. 查看配置是否正确：
 
@@ -130,9 +182,21 @@ l 目的MAC地址：R2的MAC地址
 
 首先配置R2和R3路由器，配置命令如下：
 
-| R2(PE1)                                                      | R3(P1)                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| router ospf 50router-id 2.2.2.2net 1.99.23.2 0.0.0.0 area 0net 2.2.2.2 0.0.0.0 area 0 | router ospf 50router-id 3.3.3.3net 1.99.23.3 0.0.0.0 area 0net 1.99.34.3 0.0.0.0 area 0net 3.3.3.3 0.0.0.0 area 0 |
+```sh
+#R2
+router ospf 50
+router-id 2.2.2.2
+net 1.99.23.2 0.0.0.0 area 0
+net 2.2.2.2 0.0.0.0 area 0
+
+#R3
+router ospf 50
+router-id 2.2.2.2
+net 1.99.23.2 0.0.0.0 area 0
+net 2.2.2.2 0.0.0.0 area 0
+```
+
+
 
 2. 分析OSPF邻居建立过程
 
@@ -158,11 +222,20 @@ l 目的MAC地址：R2的MAC地址
 
 同样配置R4和R5路由器
 
+```sh
+#R4
+router ospf 50
+router-id 4.4.4.4
+net 1.99.34.4 0.0.0.0 area 0
+net 1.99.45.4 0.0.0.0 area 0
+net 4.4.4.4 0.0.0.0 area 0
 
-
-| R4(P2)                                                       | R5(PE2)                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| router ospf 50router-id 4.4.4.4net 1.99.34.4 0.0.0.0 area 0net 1.99.45.4 0.0.0.0 area 0net 4.4.4.4 0.0.0.0 area 0 | router ospf 50router-id 5.5.5.5net 1.99.45.5 0.0.0.0 area 0net 5.5.5.5 0.0.0.0 area 0 |
+#R5
+router ospf 50
+router-id 5.5.5.5
+net 1.99.45.5 0.0.0.0 area 0
+net 5.5.5.5 0.0.0.0 area 0
+```
 
  
 
@@ -200,11 +273,41 @@ OSPF数据库中的链路状态分为两部分：路由器链路状态和网络�
 
 1. 配置命令
 
-| R2(PE1)                                                      | R3(P1)                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ip cefmpls ldp router-id lo0mpls label range 200 299int f1/0mpls ip | ip cefmpls ldp router-id lo0mpls label range 300 399int f0/0mpls ipint f1/0mpls ip |
-| R4(P2)                                                       | R5(PE2)                                                      |
-| ip cefmpls ldp router-id lo0mpls label range 400 499int f0/0mpls ipint f1/0mpls ip | ip cefmpls ldp router-id lo0mpls label range 500 599int f0/0mpls ip |
+   ```sh
+   #R2
+   ip cef
+   mpls ldp router-id lo0
+   mpls label range 200 299
+   int f1/0
+   mpls ip
+   
+   #R3
+   ip cef
+   mpls ldp router-id lo0
+   mpls label range 300 399
+   int f0/0
+   mpls ip
+   int f1/0
+   mpls ip
+   
+   #R4
+   ip cef
+   mpls ldp router-id lo0
+   mpls label range 400 499
+   int f0/0
+   mpls ip
+   int f1/0m
+   pls ip
+   
+   #R5
+   ip cef
+   mpls ldp router-id lo0
+   mpls label range 500 599
+   int f0/0
+   mpls ip
+   ```
+
+   
 
 2. 分析LDP邻居建立过程
 
@@ -297,9 +400,26 @@ OSPF数据库中的链路状态分为两部分：路由器链路状态和网络�
 
 配置命令如下：
 
-| R2(PE1)                                                      | R5(PE2)                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ip vrf VPN1_VRFrd 1:1route-target export 2345:2route-target import 2345:5int f0/0ip vrf for VPN1_VRFip addr 1.99.12.2 255.255.255.0 | ip vrf VPN1_VRFrd 1:1route-target export 2345:5route-target import 2345:2int f1/0ip vrf for VPN1_VRFip addr 1.99.56.5 255.255.255.0 |
+```sh
+#R2
+ip vrf VPN1_VRF
+rd 1:1
+route-target export 2345:2
+route-target import 2345:5
+int f0/0
+ip vrf for VPN1_VRF
+ip addr 1.99.12.2 255.255.255.0
+
+#R5
+ip vrf VPN1_VRF
+rd 1:1
+route-target export 2345:5
+route-target import 2345:2
+int f1/0ip vrf for VPN1_VRF
+ip addr 1.99.56.5 255.255.255.0
+```
+
+
 
 注意两个VRF中的RT值配置。
 
@@ -321,7 +441,7 @@ OSPF数据库中的链路状态分为两部分：路由器链路状态和网络�
 
 （3）配置VRF后，查看私网路由：
 
-![img](MPLS-VPN-single/wps32.png)![img](MPLS-VPN-single/wps33.jpg) 
+![img](MPLS-VPN-single/wps33.jpg) 
 
 注意，此时1.99.12.0网段已放置到VPN1_VRF的私网路由中，此时，R2路由器内部维护两个路由表：私网路由和公网路由，且PE-CE间接口放置到公网中
 
@@ -339,11 +459,17 @@ PE和CE之间可以使用任意路由协议，本例中在R1(CE1)-R2(PE1)之间�
 
 （1）配置命令如下：
 
-表9 CE1-PE1之间OSPF协议配置
+```sh
+#R1
+router ospf 1
+router-id 1.1.1.1
+network 1.1.1.1 0.0.0.0 area 1
+network 1.99.12.1 0.0.0.0 area 1
 
-| R1(CE1)                                                      | R2(PE1)                                                    |
-| ------------------------------------------------------------ | ---------------------------------------------------------- |
-| router ospf 1router-id 1.1.1.1network 1.1.1.1 0.0.0.0 area 1network 1.99.12.1 0.0.0.0 area 1 | router ospf 1 vrf VPN1_VRFnetwork 1.99.12.2 0.0.0.0 area 1 |
+#R2
+router ospf 1 vrf VPN1_VRF
+network 1.99.12.2 0.0.0.0 area 1
+```
 
  
 
@@ -357,11 +483,23 @@ PE和CE之间可以使用任意路由协议，本例中在R1(CE1)-R2(PE1)之间�
 
 （1）配置命令如下
 
-表10 CE1-PE1之间RIP协议配置
+```sh
+#R5
+router rip
+address-family ipv4 vrf VPN1_VRF
+version 2
+no auto-summary
+network 1.99.56.5
 
-| R5(PE2)                                                      | R6(CE2)                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| router ripaddress-family ipv4 vrf VPN1_VRFversion 2no auto-summarynetwork 1.99.56.5 | router ripversion 2no auto-summarynetwork 6.6.6.6network 1.99.56.6 |
+#R5
+router rip
+version 2
+no auto-summary
+network 6.6.6.6
+network 1.99.56.6
+```
+
+
 
 （2）查看R5中私网路由
 
@@ -379,11 +517,42 @@ PE和CE之间可以使用任意路由协议，本例中在R1(CE1)-R2(PE1)之间�
 
 配置命令如下：
 
-表11 MP-iBGP协议配置
+```sh
+#R2
+router bgp 2345
+bgp router-id 2.2.2.2
+no bgp default ipv4-unicast
+neighbor 5.5.5.5 remote 2345
+neighbor 5.5.5.5 update-source loopback 0
+address-family vpnv4
+neighbor 5.5.5.5 activate
+neighbor 5.5.5.5 send-community extended
+router ospf 1 vrf VPN1_VRF
+redistribute bgp 2345 subnets
+router bgp 2345
+address-family ipv4 vrf VPN1_VRF
+redistribute ospf 1 match internal external
+no synchronization
 
-| R2(PE1)                                                      | R5(PE2)                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| router bgp 2345bgp router-id 2.2.2.2no bgp default ipv4-unicastneighbor 5.5.5.5 remote 2345neighbor 5.5.5.5 update-source loopback 0address-family vpnv4neighbor 5.5.5.5 activateneighbor 5.5.5.5 send-community extendedrouter ospf 1 vrf VPN1_VRFredistribute bgp 2345 subnetsrouter bgp 2345address-family ipv4 vrf VPN1_VRFredistribute ospf 1 match internal externalno synchronization | router bgp 2345bgp router-id 5.5.5.5no bgp default ipv4-unicastneighbor 2.2.2.2 remote 2345neighbor 2.2.2.2 update-source loopback 0address-family vpnv4neighbor 2.2.2.2 activateneighbor 2.2.2.2 send-community extendedrouter ripaddress-family ipv4 vrf VPN1_VRFredistribute bgp 2345 metric transparentrouter bgp 2345address-family ipv4 vrf VPN1_VRFredistribute ripexit-address-family |
+#R5
+router bgp 2345
+bgp router-id 5.5.5.5
+no bgp default ipv4-unicast
+neighbor 2.2.2.2 remote 2345
+neighbor 2.2.2.2 update-source loopback 0
+address-family vpnv4
+neighbor 2.2.2.2 activate
+neighbor 2.2.2.2 send-community extended
+router rip
+address-family ipv4 vrf VPN1_VRF
+redistribute bgp 2345 metric transparent
+router bgp 2345
+address-family ipv4 vrf VPN1_VRF
+redistribute rip
+exit-address-family
+```
+
+
 
 ### 2. 查看配置是否正确
 
