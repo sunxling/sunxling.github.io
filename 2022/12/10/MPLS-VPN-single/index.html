@@ -46,7 +46,6 @@
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps29.png">
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps30.jpg">
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps31.jpg">
-<meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps32.png">
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps33.jpg">
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps35.jpg">
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps38.jpg">
@@ -63,8 +62,8 @@
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps57.jpg">
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps59.jpg">
 <meta property="og:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps61.jpg">
-<meta property="article:published_time" content="2022-12-10T15:20:24.000Z">
-<meta property="article:modified_time" content="2022-12-10T15:28:32.790Z">
+<meta property="article:published_time" content="2022-12-10T23:20:24.000Z">
+<meta property="article:modified_time" content="2022-12-14T15:20:02.607Z">
 <meta property="article:author" content="sunxling">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://sunxling.github.io/2022/12/10/MPLS-VPN-single/wps1.jpg">
@@ -224,7 +223,7 @@
   <style>#main article .mdui-card-content .text-center{text-align:center!important}</style>
   <article class="mdui-card mdui-m-b-5">
     <header class="mdui-card-media">
-      <img src="/images/random/material-2.png" style="max-height: 240px;">
+      <img src="/images/random/material-6.png" style="max-height: 240px;">
       <div class="mdui-card-media-covered">
         <div class="mdui-card-primary">
           <div class="mdui-card-primary-title">MPLS VPN(single)</div>
@@ -331,34 +330,11 @@
 <p>（4）配置完后，网络中的IP地址如下图所示</p>
 <img src="/2022/12/10/MPLS-VPN-single/wps2.jpg" class="" title="img"> 
 
-<h3 id="2-配置命令："><a href="#2-配置命令：" class="headerlink" title="2. 配置命令："></a>2. 配置命令：</h3><table>
-<thead>
-<tr>
-<th>R1(CE1)</th>
-<th>R2(PE1)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>int f0/0ip address 1.99.12.1 255.255.255.0no shutdownint lo0ip address 1.1.1.1 255.255.255.255</td>
-<td>int f0/0ip address 1.99.12.2 255.255.255.0no shutdownint f1/0ip address 1.99.23.2 255.255.255.0no shutdownint lo0ip address 2.2.2.2 255.255.255.255</td>
-</tr>
-<tr>
-<td>R3(P1)</td>
-<td>R4(P2)</td>
-</tr>
-<tr>
-<td>int f0/0ip address 1.99.23.3 255.255.255.0no shutdownint f1/0ip address 1.99.34.3 255.255.255.0no shutdownint lo0ip address 3.3.3.3 255.255.255.255</td>
-<td>int f0/0ip address 1.99.34.4 255.255.255.0no shutdownint f1/0ip address 1.99.45.4 255.255.255.0no shutdownint lo0ip address 4.4.4.4 255.255.255.255</td>
-</tr>
-<tr>
-<td>R5(PE2)</td>
-<td>R6(CE2)</td>
-</tr>
-<tr>
-<td>int f0/0ip address 1.99.45.5 255.255.255.0no shutdownint f1/0ip address 1.99.56.5 255.255.255.0no shutdownint lo0ip address 5.5.5.5 255.255.255.255</td>
-<td>int f0/0ip address 1.99.56.6 255.255.255.0no shutdownint lo0ip address 6.6.6.6 255.255.255.255</td>
-</tr>
-</tbody></table>
+<h3 id="2-配置命令："><a href="#2-配置命令：" class="headerlink" title="2. 配置命令："></a>2. 配置命令：</h3><p>R1:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R1:</span></span><br><span class="line">int f0/0</span><br><span class="line">ip address 1.99.12.1 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int lo0</span><br><span class="line">ip address 1.1.1.1 255.255.255.255</span><br><span class="line"></span><br><span class="line"><span class="comment">#R2:</span></span><br><span class="line">int f0/0</span><br><span class="line">ip address 1.99.12.2 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int f1/0</span><br><span class="line">ip address 1.99.23.2 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int lo0</span><br><span class="line">ip address 2.2.2.2 255.255.255.255</span><br><span class="line"></span><br><span class="line"><span class="comment">#R3:</span></span><br><span class="line">int f0/0</span><br><span class="line">ip address 1.99.23.3 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int f1/0</span><br><span class="line">ip address 1.99.34.3 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int lo0</span><br><span class="line">ip address 3.3.3.3 255.255.255.255</span><br><span class="line"></span><br><span class="line"><span class="comment">#R4</span></span><br><span class="line">int f0/0</span><br><span class="line">ip address 1.99.34.4 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int f1/0</span><br><span class="line">ip address 1.99.45.4 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int lo0</span><br><span class="line">ip address 4.4.4.4 255.255.255.255</span><br><span class="line"></span><br><span class="line"><span class="comment">#R5</span></span><br><span class="line">int f0/0</span><br><span class="line">ip address 1.99.45.5 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int f1/0</span><br><span class="line">ip address 1.99.56.5 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int lo0</span><br><span class="line">ip address 5.5.5.5 255.255.255.255</span><br><span class="line"></span><br><span class="line"><span class="comment">#R6</span></span><br><span class="line">int f0/0</span><br><span class="line">ip address 1.99.56.6 255.255.255.0</span><br><span class="line">no shutdown</span><br><span class="line">int lo0</span><br><span class="line">ip address 6.6.6.6 255.255.255.255</span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="3-查看配置是否正确："><a href="#3-查看配置是否正确：" class="headerlink" title="3. 查看配置是否正确："></a>3. 查看配置是否正确：</h3><p>（1）查看端口状态：</p>
 <img src="/2022/12/10/MPLS-VPN-single/wps3.jpg" class="" title="img"> 
 
@@ -404,18 +380,10 @@
 <li>配置命令</li>
 </ol>
 <p>首先配置R2和R3路由器，配置命令如下：</p>
-<table>
-<thead>
-<tr>
-<th>R2(PE1)</th>
-<th>R3(P1)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>router ospf 50router-id 2.2.2.2net 1.99.23.2 0.0.0.0 area 0net 2.2.2.2 0.0.0.0 area 0</td>
-<td>router ospf 50router-id 3.3.3.3net 1.99.23.3 0.0.0.0 area 0net 1.99.34.3 0.0.0.0 area 0net 3.3.3.3 0.0.0.0 area 0</td>
-</tr>
-</tbody></table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R2</span></span><br><span class="line">router ospf 50</span><br><span class="line">router-id 2.2.2.2</span><br><span class="line">net 1.99.23.2 0.0.0.0 area 0</span><br><span class="line">net 2.2.2.2 0.0.0.0 area 0</span><br><span class="line"></span><br><span class="line"><span class="comment">#R3</span></span><br><span class="line">router ospf 50</span><br><span class="line">router-id 2.2.2.2</span><br><span class="line">net 1.99.23.2 0.0.0.0 area 0</span><br><span class="line">net 2.2.2.2 0.0.0.0 area 0</span><br></pre></td></tr></table></figure>
+
+
+
 <ol start="2">
 <li>分析OSPF邻居建立过程</li>
 </ol>
@@ -436,18 +404,8 @@
 
 
 <p>同样配置R4和R5路由器</p>
-<table>
-<thead>
-<tr>
-<th>R4(P2)</th>
-<th>R5(PE2)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>router ospf 50router-id 4.4.4.4net 1.99.34.4 0.0.0.0 area 0net 1.99.45.4 0.0.0.0 area 0net 4.4.4.4 0.0.0.0 area 0</td>
-<td>router ospf 50router-id 5.5.5.5net 1.99.45.5 0.0.0.0 area 0net 5.5.5.5 0.0.0.0 area 0</td>
-</tr>
-</tbody></table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R4</span></span><br><span class="line">router ospf 50</span><br><span class="line">router-id 4.4.4.4</span><br><span class="line">net 1.99.34.4 0.0.0.0 area 0</span><br><span class="line">net 1.99.45.4 0.0.0.0 area 0</span><br><span class="line">net 4.4.4.4 0.0.0.0 area 0</span><br><span class="line"></span><br><span class="line"><span class="comment">#R5</span></span><br><span class="line">router ospf 50</span><br><span class="line">router-id 5.5.5.5</span><br><span class="line">net 1.99.45.5 0.0.0.0 area 0</span><br><span class="line">net 5.5.5.5 0.0.0.0 area 0</span><br></pre></td></tr></table></figure>
+
 <ol start="3">
 <li>查看配置是否正确</li>
 </ol>
@@ -470,30 +428,10 @@
 
 <h2 id="四、域内MPLS配置"><a href="#四、域内MPLS配置" class="headerlink" title="四、域内MPLS配置"></a>四、域内MPLS配置</h2><p>在R2、R3、R4和R5的对应接口配置MPLS，激活LDP。此步骤需注意边缘路由器的接口配置。</p>
 <ol>
-<li>配置命令</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>R2(PE1)</th>
-<th>R3(P1)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ip cefmpls ldp router-id lo0mpls label range 200 299int f1/0mpls ip</td>
-<td>ip cefmpls ldp router-id lo0mpls label range 300 399int f0/0mpls ipint f1/0mpls ip</td>
-</tr>
-<tr>
-<td>R4(P2)</td>
-<td>R5(PE2)</td>
-</tr>
-<tr>
-<td>ip cefmpls ldp router-id lo0mpls label range 400 499int f0/0mpls ipint f1/0mpls ip</td>
-<td>ip cefmpls ldp router-id lo0mpls label range 500 599int f0/0mpls ip</td>
-</tr>
-</tbody></table>
-<ol start="2">
-<li>分析LDP邻居建立过程</li>
+<li><p>配置命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R2</span></span><br><span class="line">ip cef</span><br><span class="line">mpls ldp router-id lo0</span><br><span class="line">mpls label range 200 299</span><br><span class="line">int f1/0</span><br><span class="line">mpls ip</span><br><span class="line"></span><br><span class="line"><span class="comment">#R3</span></span><br><span class="line">ip cef</span><br><span class="line">mpls ldp router-id lo0</span><br><span class="line">mpls label range 300 399</span><br><span class="line">int f0/0</span><br><span class="line">mpls ip</span><br><span class="line">int f1/0</span><br><span class="line">mpls ip</span><br><span class="line"></span><br><span class="line"><span class="comment">#R4</span></span><br><span class="line">ip cef</span><br><span class="line">mpls ldp router-id lo0</span><br><span class="line">mpls label range 400 499</span><br><span class="line">int f0/0</span><br><span class="line">mpls ip</span><br><span class="line">int f1/0m</span><br><span class="line">pls ip</span><br><span class="line"></span><br><span class="line"><span class="comment">#R5</span></span><br><span class="line">ip cef</span><br><span class="line">mpls ldp router-id lo0</span><br><span class="line">mpls label range 500 599</span><br><span class="line">int f0/0</span><br><span class="line">mpls ip</span><br></pre></td></tr></table></figure></li>
+<li><p>分析LDP邻居建立过程</p>
+</li>
 </ol>
 <p>配置完R2后，可以看到链路上R2在不停发LDP Hello报文。</p>
 <img src="/2022/12/10/MPLS-VPN-single/wps15.jpg" class="" title="img"> 
@@ -633,18 +571,10 @@
 <p>看到，数据包在1.99.23.0链路上标签为303，在1.99.34.0链路上标签为403，在1.99.45.0链路上无标签，此为倒数第二跳弹栈技术。</p>
 <h2 id="五、PE上VRF配置"><a href="#五、PE上VRF配置" class="headerlink" title="五、PE上VRF配置"></a>五、PE上VRF配置</h2><h3 id="1-配置命令"><a href="#1-配置命令" class="headerlink" title="1. 配置命令"></a>1. 配置命令</h3><p>在R2(PE1)和R5(PE2)上配置VRF，把对应接口放入VRF中</p>
 <p>配置命令如下：</p>
-<table>
-<thead>
-<tr>
-<th>R2(PE1)</th>
-<th>R5(PE2)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ip vrf VPN1_VRFrd 1:1route-target export 2345:2route-target import 2345:5int f0/0ip vrf for VPN1_VRFip addr 1.99.12.2 255.255.255.0</td>
-<td>ip vrf VPN1_VRFrd 1:1route-target export 2345:5route-target import 2345:2int f1/0ip vrf for VPN1_VRFip addr 1.99.56.5 255.255.255.0</td>
-</tr>
-</tbody></table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R2</span></span><br><span class="line">ip vrf VPN1_VRF</span><br><span class="line">rd 1:1</span><br><span class="line">route-target <span class="built_in">export</span> 2345:2</span><br><span class="line">route-target import 2345:5</span><br><span class="line">int f0/0</span><br><span class="line">ip vrf <span class="keyword">for</span> VPN1_VRF</span><br><span class="line">ip addr 1.99.12.2 255.255.255.0</span><br><span class="line"></span><br><span class="line"><span class="comment">#R5</span></span><br><span class="line">ip vrf VPN1_VRF</span><br><span class="line">rd 1:1</span><br><span class="line">route-target <span class="built_in">export</span> 2345:5</span><br><span class="line">route-target import 2345:2</span><br><span class="line">int f1/0ip vrf <span class="keyword">for</span> VPN1_VRF</span><br><span class="line">ip addr 1.99.56.5 255.255.255.0</span><br></pre></td></tr></table></figure>
+
+
+
 <p>注意两个VRF中的RT值配置。</p>
 <h3 id="2-查看配置是否正确"><a href="#2-查看配置是否正确" class="headerlink" title="2. 查看配置是否正确"></a>2. 查看配置是否正确</h3><p>使用show命令查看VRF路由表和公网路由表，注意配置VRF前后公网路由表的变化。</p>
 <p>（1）配置VRF前，查看公网路由：</p>
@@ -656,7 +586,7 @@
 
 <p>注意：此时公网路由中无1.99.12.0网段</p>
 <p>（3）配置VRF后，查看私网路由：</p>
-<img src="/2022/12/10/MPLS-VPN-single/wps32.png" class="" title="img"><img src="/2022/12/10/MPLS-VPN-single/wps33.jpg" class="" title="img"> 
+<img src="/2022/12/10/MPLS-VPN-single/wps33.jpg" class="" title="img"> 
 
 <p>注意，此时1.99.12.0网段已放置到VPN1_VRF的私网路由中，此时，R2路由器内部维护两个路由表：私网路由和公网路由，且PE-CE间接口放置到公网中</p>
 <p>（4）配置VRF后，查看VRF参数：</p>
@@ -666,37 +596,17 @@
 
 <h2 id="六、PE-CE之间路由配置"><a href="#六、PE-CE之间路由配置" class="headerlink" title="六、PE-CE之间路由配置"></a>六、PE-CE之间路由配置</h2><p>PE和CE之间可以使用任意路由协议，本例中在R1(CE1)-R2(PE1)之间使用OSPF协议，在R5(PE2)-R6(CE2)之间使用RIP协议</p>
 <h3 id="1-配置CE1-PE1之间的OSPF协议"><a href="#1-配置CE1-PE1之间的OSPF协议" class="headerlink" title="1. 配置CE1-PE1之间的OSPF协议"></a>1. 配置CE1-PE1之间的OSPF协议</h3><p>（1）配置命令如下：</p>
-<p>表9 CE1-PE1之间OSPF协议配置</p>
-<table>
-<thead>
-<tr>
-<th>R1(CE1)</th>
-<th>R2(PE1)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>router ospf 1router-id 1.1.1.1network 1.1.1.1 0.0.0.0 area 1network 1.99.12.1 0.0.0.0 area 1</td>
-<td>router ospf 1 vrf VPN1_VRFnetwork 1.99.12.2 0.0.0.0 area 1</td>
-</tr>
-</tbody></table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R1</span></span><br><span class="line">router ospf 1</span><br><span class="line">router-id 1.1.1.1</span><br><span class="line">network 1.1.1.1 0.0.0.0 area 1</span><br><span class="line">network 1.99.12.1 0.0.0.0 area 1</span><br><span class="line"></span><br><span class="line"><span class="comment">#R2</span></span><br><span class="line">router ospf 1 vrf VPN1_VRF</span><br><span class="line">network 1.99.12.2 0.0.0.0 area 1</span><br></pre></td></tr></table></figure>
+
 <p>（2）查看R2的VRF路由表，确定其中是否包含CE1上路由。（此步骤时间较长）</p>
 <img src="/2022/12/10/MPLS-VPN-single/wps38.jpg" class="" title="img"> 
 
 <p>由上可见，此时VRF表中含有1.99.12.0和1.1.1.1两项路由，且此时1.1.1.1路由类型为O，说明此路由来自于OSPF协议。</p>
 <h3 id="2-配置CE2-PE2之间的RIP协议"><a href="#2-配置CE2-PE2之间的RIP协议" class="headerlink" title="2. 配置CE2-PE2之间的RIP协议"></a>2. 配置CE2-PE2之间的RIP协议</h3><p>（1）配置命令如下</p>
-<p>表10 CE1-PE1之间RIP协议配置</p>
-<table>
-<thead>
-<tr>
-<th>R5(PE2)</th>
-<th>R6(CE2)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>router ripaddress-family ipv4 vrf VPN1_VRFversion 2no auto-summarynetwork 1.99.56.5</td>
-<td>router ripversion 2no auto-summarynetwork 6.6.6.6network 1.99.56.6</td>
-</tr>
-</tbody></table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R5</span></span><br><span class="line">router rip</span><br><span class="line">address-family ipv4 vrf VPN1_VRF</span><br><span class="line">version 2</span><br><span class="line">no auto-summary</span><br><span class="line">network 1.99.56.5</span><br><span class="line"></span><br><span class="line"><span class="comment">#R5</span></span><br><span class="line">router rip</span><br><span class="line">version 2</span><br><span class="line">no auto-summary</span><br><span class="line">network 6.6.6.6</span><br><span class="line">network 1.99.56.6</span><br></pre></td></tr></table></figure>
+
+
+
 <p>（2）查看R5中私网路由</p>
 <img src="/2022/12/10/MPLS-VPN-single/wps40.jpg" class="" title="img"> 
 
@@ -705,19 +615,10 @@
 <p>由此可见，此时R5的VRF中包含两条路由：1.99.56.0和6.6.6.6，且路由6.6.6.6为RIP协议引入，配置成功。</p>
 <h2 id="七、配置MP-iBGP协议"><a href="#七、配置MP-iBGP协议" class="headerlink" title="七、配置MP-iBGP协议"></a>七、配置MP-iBGP协议</h2><h3 id="1-配置命令-1"><a href="#1-配置命令-1" class="headerlink" title="1. 配置命令"></a>1. 配置命令</h3><p>在PE1和PE2上配置MP-iBGP协议，此步骤需一定时间</p>
 <p>配置命令如下：</p>
-<p>表11 MP-iBGP协议配置</p>
-<table>
-<thead>
-<tr>
-<th>R2(PE1)</th>
-<th>R5(PE2)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>router bgp 2345bgp router-id 2.2.2.2no bgp default ipv4-unicastneighbor 5.5.5.5 remote 2345neighbor 5.5.5.5 update-source loopback 0address-family vpnv4neighbor 5.5.5.5 activateneighbor 5.5.5.5 send-community extendedrouter ospf 1 vrf VPN1_VRFredistribute bgp 2345 subnetsrouter bgp 2345address-family ipv4 vrf VPN1_VRFredistribute ospf 1 match internal externalno synchronization</td>
-<td>router bgp 2345bgp router-id 5.5.5.5no bgp default ipv4-unicastneighbor 2.2.2.2 remote 2345neighbor 2.2.2.2 update-source loopback 0address-family vpnv4neighbor 2.2.2.2 activateneighbor 2.2.2.2 send-community extendedrouter ripaddress-family ipv4 vrf VPN1_VRFredistribute bgp 2345 metric transparentrouter bgp 2345address-family ipv4 vrf VPN1_VRFredistribute ripexit-address-family</td>
-</tr>
-</tbody></table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#R2</span></span><br><span class="line">router bgp 2345</span><br><span class="line">bgp router-id 2.2.2.2</span><br><span class="line">no bgp default ipv4-unicast</span><br><span class="line">neighbor 5.5.5.5 remote 2345</span><br><span class="line">neighbor 5.5.5.5 update-source loopback 0</span><br><span class="line">address-family vpnv4</span><br><span class="line">neighbor 5.5.5.5 activate</span><br><span class="line">neighbor 5.5.5.5 send-community extended</span><br><span class="line">router ospf 1 vrf VPN1_VRF</span><br><span class="line">redistribute bgp 2345 subnets</span><br><span class="line">router bgp 2345</span><br><span class="line">address-family ipv4 vrf VPN1_VRF</span><br><span class="line">redistribute ospf 1 match internal external</span><br><span class="line">no synchronization</span><br><span class="line"></span><br><span class="line"><span class="comment">#R5</span></span><br><span class="line">router bgp 2345</span><br><span class="line">bgp router-id 5.5.5.5</span><br><span class="line">no bgp default ipv4-unicast</span><br><span class="line">neighbor 2.2.2.2 remote 2345</span><br><span class="line">neighbor 2.2.2.2 update-source loopback 0</span><br><span class="line">address-family vpnv4</span><br><span class="line">neighbor 2.2.2.2 activate</span><br><span class="line">neighbor 2.2.2.2 send-community extended</span><br><span class="line">router rip</span><br><span class="line">address-family ipv4 vrf VPN1_VRF</span><br><span class="line">redistribute bgp 2345 metric transparent</span><br><span class="line">router bgp 2345</span><br><span class="line">address-family ipv4 vrf VPN1_VRF</span><br><span class="line">redistribute rip</span><br><span class="line">exit-address-family</span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="2-查看配置是否正确-1"><a href="#2-查看配置是否正确-1" class="headerlink" title="2. 查看配置是否正确"></a>2. 查看配置是否正确</h3><p>此时查看PE1上VRF路由</p>
 <img src="/2022/12/10/MPLS-VPN-single/wps43.jpg" class="" title="img"> 
 
