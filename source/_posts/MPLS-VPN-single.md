@@ -429,7 +429,7 @@ ip addr 1.99.56.5 255.255.255.0
 
 （1）配置VRF前，查看公网路由：
 
-![img](MPLS-VPN-single/wps29.png)![img](MPLS-VPN-single/wps30.jpg) 
+![img](MPLS-VPN-single/wps30.jpg) 
 
 注意此时公网路由中有1.99.12.0网段路由
 
