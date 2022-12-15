@@ -570,7 +570,7 @@ exit-address-family
 
 此时可以查看R2-R3链路上的BGP数据包，可以查到R2和R5之间互发的BGP更新报文中分别装载了目的网络、私网标签、RD值、RT值。
 
-![img](MPLS-VPN-single/wps45.jpg)![img](MPLS-VPN-single/wps48.png) 
+![img](MPLS-VPN-single/wps45.jpg)
 
 ## 八、VPN客户端互通测试
 
